@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Hexagon -->
+  <polygon 
+    points="100,17.4 170,42.6 170,157.4 100,182.6 30,157.4 30,42.6" 
+    fill="none" 
+    stroke="#78c8ff" 
+    stroke-width="3" 
+    stroke-linejoin="round"
+  />
+  <!-- Lightning Bolt -->
+  <polygon 
+    points="100,30 117.5,64 103.5,64 112.6,135 89.5,103.5 101.4,103.5 91.6,30" 
+    fill="white" 
+    stroke="#78c8ff" 
+    stroke-width="1.5" 
+    stroke-linejoin="round"
+  />
+</svg>

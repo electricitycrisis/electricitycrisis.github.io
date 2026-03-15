@@ -1,0 +1,115 @@
+import { motion } from "framer-motion"
+import { useState } from "react"
+
+const members = [
+  {
+    name: "MUHAMMAD USMAN KHAN",
+    topic: "Impact of government policies on energy provision and distribution",
+    detail: "Analyzing how subsidies, IPP contracts, and regulatory failures shape Pakistan's energy landscape.",
+    voltage: "220.4V",
+  },
+  {
+    name: "ABDUL NAFAY",
+    topic: "Flaws in Pakistan's power generation and transmission",
+    detail: "Investigating outdated grid infrastructure, fossil-fuel dependency, and 17–38% transmission losses.",
+    voltage: "187.2V",
+  },
+  {
+    name: "ABDULLAH IBNE ALI",
+    topic: "Impact of inadequate energy supply on the economy and living standards",
+    detail: "Measuring the 2–4% GDP loss, business closures, and household burden of rising tariffs.",
+    voltage: "195.8V",
+  },
+  {
+    name: "MUHAMMAD HASAN HYDARI",
+    topic: "Effects of load-shedding on communities",
+    detail: "Documenting health risks, educational disruption, and daily survival during 8–12 hour outages.",
+    voltage: "203.1V",
+  },
+]
+
+const InvestigationStage = () => {
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
+
+  return (
+    <motion.section
+      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20 relative"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8 }}
+    >
+      <motion.p
+        className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        // STAGE_01: INVESTIGATION
+      </motion.p>
+
+      <motion.h2
+        className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+      >
+        THE INVESTIGATION
+      </motion.h2>
+
+      <motion.p
+        className="text-sm text-muted-foreground max-w-2xl text-center mb-12 leading-relaxed"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+      >
+        Each team member investigated a critical dimension of Pakistan's electricity crisis —
+        from policy failures to community impact — building a comprehensive systemic audit.
+      </motion.p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full" style={{ perspective: "1000px" }}>
+        {members.map((m, i) => (
+          <motion.div
+            key={m.name}
+            className={`glass-panel clip-industrial p-6 relative cursor-pointer transition-all duration-500 ${
+              hoveredIdx === i ? "glow-blue" : ""
+            }`}
+            initial={{ opacity: 0, rotateY: 15, x: i % 2 === 0 ? -60 : 60 }}
+            whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: i * 0.15, type: "spring", stiffness: 80 }}
+            whileHover={{ scale: 1.03, rotateY: 5 }}
+            onHoverStart={() => setHoveredIdx(i)}
+            onHoverEnd={() => setHoveredIdx(null)}
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            <div className="scanlines absolute inset-0 pointer-events-none" />
+
+            <div className="flex justify-between items-start mb-4">
+              <span className="font-mono-code text-xs text-accent">{m.voltage}</span>
+              <span className="font-mono-code text-xs text-primary/40">NODE_{String(i + 1).padStart(2, "0")}</span>
+            </div>
+
+            <h3 className="font-mono-code text-xs sm:text-sm text-primary/80 mb-2 tracking-wider">
+              {m.name}
+            </h3>
+
+            <p className="text-sm sm:text-base text-foreground/90 leading-relaxed mb-2">
+              {m.topic}
+            </p>
+
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              {m.detail}
+            </p>
+
+            <div className="mt-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          </motion.div>
+        ))}
+      </div>
+    </motion.section>
+  )
+}
+
+export default InvestigationStage
