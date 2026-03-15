@@ -36,7 +36,7 @@ const HeroStage = () => {
         style={{ mixBlendMode: "difference" }}
         variants={fadeIn}
       >
-        PAKISTAN
+        KARACHI
         <br />
         <span className="text-primary">ELECTRICITY</span>
         <br />
