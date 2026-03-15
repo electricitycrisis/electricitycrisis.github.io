@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -7,7 +7,7 @@ const fadeIn = {
     y: 0,
     transition: { duration: 0.8 },
   },
-}
+};
 
 const HeroStage = () => {
   return (
@@ -18,7 +18,7 @@ const HeroStage = () => {
       variants={{ visible: { transition: { staggerChildren: 0.3 } } }}
     >
       <motion.img
-        src="/logo.png"
+        src="/logo-no-bg.png"
         alt="GPR Logo"
         className="w-24 h-24 sm:w-32 sm:h-32 mb-6 drop-shadow-[0_0_30px_hsl(200,80%,73%,0.6)]"
         variants={fadeIn}
@@ -73,7 +73,7 @@ const HeroStage = () => {
         SCROLL TO ENGAGE ▼
       </motion.div>
     </motion.section>
-  )
-}
+  );
+};
 
-export default HeroStage
+export default HeroStage;
