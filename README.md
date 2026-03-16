@@ -1,2 +1,2 @@
-# Global Prespectives and Research (GPR)
+# Global Prespectives (GP)
 
