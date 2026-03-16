@@ -2,51 +2,52 @@ import { motion } from "framer-motion"
 
 const stats = [
   {
-    value: "Rs 2.4T",
-    label: "Circular Debt",
-    detail: "Accumulated government liability owed to power producers, rising ~Rs 900B annually.",
+    value: "Rs 60B+",
+    label: "K-Electric Circular Debt",
+    detail: "Accumulated receivables owed to K-Electric, compounded by government and consumer non-payment.",
     icon: "◈",
   },
   {
-    value: "17–38%",
-    label: "Transmission & Distribution Losses",
-    detail: "National average ~17%, but some DISCOs like SEPCO & HESCO lose up to 38% of electricity.",
+    value: "30–35%",
+    label: "T&D Losses",
+    detail: "K-Electric's transmission and distribution losses remain among the highest for any major utility in Pakistan.",
     icon: "◆",
   },
   {
-    value: "Rs 1.9T",
-    label: "Annual Capacity Payments",
-    detail: "Paid to IPPs for idle power plants under take-or-pay contracts — even when no electricity is generated.",
+    value: "Rs 55–65",
+    label: "Effective Tariff (per unit)",
+    detail: "Karachi consumers face some of the highest effective electricity rates when surcharges and taxes are included.",
     icon: "▶",
   },
   {
-    value: "Rs 54/unit",
-    label: "Consumer Tariff (2024)",
-    detail: "Electricity price more than doubled from Rs 25/unit in 2021, squeezing households and businesses.",
+    value: "16M+",
+    label: "Population Served",
+    detail: "K-Electric is the sole power provider for over 16 million people — a monopoly with no alternative for consumers.",
     icon: "◉",
   },
   {
-    value: "8–12 hrs",
-    label: "Daily Load-Shedding (Rural)",
-    detail: "Rural Pakistan endures 8–12 hours of outages daily; urban areas face 4–6 hours in summer peaks.",
+    value: "6–12 hrs",
+    label: "Daily Load-Shedding",
+    detail: "Peripheral areas of Karachi endure 6–12 hours of outages daily; even 'exempt' areas face unscheduled cuts.",
     icon: "◇",
   },
   {
-    value: "2–4%",
-    label: "Annual GDP Loss",
-    detail: "Unreliable power costs Pakistan an estimated 2–4% of GDP through lost productivity and business closures.",
+    value: "12–18%",
+    label: "Business Closures",
+    detail: "Surveys indicate 12–18% of small businesses in Karachi have shut down or relocated due to power costs and unreliability.",
     icon: "◎",
   },
 ]
 
 const paragraphs = [
-  "Pakistan's electricity sector is trapped in a vicious cycle: excess installed capacity coexists with chronic load-shedding because the system cannot afford to run or deliver the power it generates. Over 40% of electricity still comes from imported fossil fuels, exposing consumers to volatile global prices.",
-  "Independent Power Producers (IPPs) hold contracts guaranteeing capacity payments in US dollars regardless of dispatch, draining foreign reserves while consumers bear escalating tariffs. Theft, outdated infrastructure, and governance failures compound the losses — turning a solvable engineering problem into a systemic crisis.",
+  "Karachi's electricity crisis is defined by a single private monopoly — K-Electric — serving over 16 million people with ageing infrastructure, chronic underinvestment, and massive transmission losses. Consumers have no alternative provider, leaving them captive to rising tariffs and unreliable supply.",
+  "Electricity theft, outdated grid infrastructure, and governance failures compound K-Electric's distribution losses. Meanwhile, Karachi's industrial base — once the engine of Pakistan's economy — is haemorrhaging businesses to cities with cheaper, more reliable power, deepening the city's economic decline.",
 ]
 
 const CrisisStage = () => {
   return (
     <motion.section
+      id="crisis"
       className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}

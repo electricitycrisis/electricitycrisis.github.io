@@ -10,6 +10,7 @@ const roles = [
 const LogisticsStage = () => {
   return (
     <motion.section
+      id="logistics"
       className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -57,7 +58,7 @@ const LogisticsStage = () => {
         viewport={{ once: true }}
         transition={{ delay: 0.3 }}
       >
-        Sources include NEPRA reports, World Bank energy data, and first-hand community interviews.
+        Sources include NEPRA reports, World Bank energy data, and first-hand community interviews in Karachi.
       </motion.p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl w-full">

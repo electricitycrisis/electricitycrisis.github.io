@@ -4,21 +4,28 @@ import { useRef } from "react"
 const milestones = [
   {
     title: "CLASS ASSEMBLY",
-    description: "Educating peers about the causes and consequences of the electricity crisis in Pakistan, and what can be done to mitigate them.",
+    description: "Educating peers about the causes and consequences of the electricity crisis in Karachi, and what can be done to mitigate them.",
     success: "Reviews of students who attended",
     tag: "AWARENESS",
+    link: "/assembly",
+    linkLabel: "View Assembly →",
   },
   {
     title: "POSTER CAMPAIGN",
     description: "Visual reminders deployed across the campus to encourage electricity conservation habits.",
     success: "If appliances are being turned off after use or not",
     tag: "ACTION",
+    link: "/posters",
+    linkLabel: "View Posters →",
   },
   {
     title: "INSTAGRAM AWARENESS",
     description: "Raising awareness online through Instagram — reaching wider audiences beyond the campus.",
     success: "Follower and view count of our page",
     tag: "DIGITAL",
+    link: "https://www.instagram.com/electricitycrisis/",
+    linkLabel: "Visit Instagram →",
+    external: true,
   },
 ]
 
@@ -33,6 +40,7 @@ const PlanStage = () => {
 
   return (
     <motion.section
+      id="plan"
       ref={containerRef}
       className="snap-section min-h-screen flex flex-col items-center px-4 py-20"
       initial={{ opacity: 0 }}
@@ -66,12 +74,11 @@ const PlanStage = () => {
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        Our plan of action was based on how we as individuals can minimize
+        Our plan of action was based on how we as individuals can minimise
         electricity misuse in our and others' lives.
       </motion.p>
 
       <div className="relative max-w-2xl w-full">
-        {/* Glowing power line */}
         <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-[2px] bg-border">
           <motion.div
             className="w-full bg-primary"
@@ -89,7 +96,6 @@ const PlanStage = () => {
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: i * 0.15, type: "spring" }}
             >
-              {/* Node */}
               <div
                 className="absolute left-4 sm:left-6 w-4 h-4 rounded-full border-2 border-accent bg-background"
                 style={{ animation: "pulse-green 2s infinite", animationDelay: `${i * 0.5}s` }}
@@ -115,12 +121,21 @@ const PlanStage = () => {
                   {m.description}
                 </p>
 
-                <div className="flex items-center gap-2 text-xs">
+                <div className="flex items-center gap-2 text-xs mb-4">
                   <span className="w-2 h-2 rounded-full bg-accent glow-green" />
                   <span className="font-mono-code text-accent/80">
                     SUCCESS METRIC: {m.success}
                   </span>
                 </div>
+
+                <a
+                  href={m.link}
+                  target={m.external ? "_blank" : undefined}
+                  rel={m.external ? "noopener noreferrer" : undefined}
+                  className="inline-block font-mono-code text-xs text-primary hover:text-primary/80 border border-primary/30 px-3 py-1.5 clip-industrial transition-colors hover:bg-primary/10"
+                >
+                  {m.linkLabel}
+                </a>
               </div>
             </motion.div>
           ))}

@@ -4,26 +4,26 @@ import { useState } from "react"
 const members = [
   {
     name: "MUHAMMAD USMAN KHAN",
-    topic: "Impact of government policies on energy provision and distribution",
-    detail: "Analyzing how subsidies, IPP contracts, and regulatory failures shape Pakistan's energy landscape.",
+    topic: "Impact of government policies on energy provision and distribution in Karachi",
+    detail: "Analysing how subsidies, K-Electric's privatisation, and regulatory gaps shape Karachi's energy landscape.",
     voltage: "220.4V",
   },
   {
     name: "ABDUL NAFAY",
-    topic: "Flaws in Pakistan's power generation and transmission",
-    detail: "Investigating outdated grid infrastructure, fossil-fuel dependency, and 17–38% transmission losses.",
+    topic: "Flaws in Karachi's power generation and transmission",
+    detail: "Investigating K-Electric's ageing grid infrastructure, fossil-fuel dependency, and 30–35% transmission losses.",
     voltage: "187.2V",
   },
   {
     name: "ABDULLAH IBNE ALI",
-    topic: "Impact of inadequate energy supply on the economy and living standards",
-    detail: "Measuring the 2–4% GDP loss, business closures, and household burden of rising tariffs.",
+    topic: "Impact of inadequate energy supply on Karachi's economy and living standards",
+    detail: "Measuring business closures, industrial flight, and the household burden of rising tariffs in Karachi.",
     voltage: "195.8V",
   },
   {
     name: "MUHAMMAD HASAN HYDARI",
-    topic: "Effects of load-shedding on communities",
-    detail: "Documenting health risks, educational disruption, and daily survival during 8–12 hour outages.",
+    topic: "Effects of load-shedding on communities in Karachi",
+    detail: "Documenting health risks, educational disruption, and daily survival during 6–12 hour outages across Karachi.",
     voltage: "203.1V",
   },
 ]
@@ -33,6 +33,7 @@ const InvestigationStage = () => {
 
   return (
     <motion.section
+      id="investigation"
       className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20 relative"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -65,8 +66,8 @@ const InvestigationStage = () => {
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        Each team member investigated a critical dimension of Pakistan's electricity crisis —
-        from policy failures to community impact — building a comprehensive systemic audit.
+        Each team member investigated a critical dimension of Karachi's electricity crisis —
+        from policy failures to community impact — building a comprehensive research portfolio.
       </motion.p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full" style={{ perspective: "1000px" }}>

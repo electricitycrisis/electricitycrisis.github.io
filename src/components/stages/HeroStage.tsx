@@ -12,6 +12,7 @@ const fadeIn = {
 const HeroStage = () => {
   return (
     <motion.section
+      id="hero"
       className="snap-section flex flex-col items-center justify-center min-h-screen relative px-4"
       initial="hidden"
       animate="visible"
@@ -19,7 +20,7 @@ const HeroStage = () => {
     >
       <motion.img
         src="/logo-no-bg.png"
-        alt="GPR Logo"
+        alt="GP Logo"
         className="w-24 h-24 sm:w-32 sm:h-32 mb-6 drop-shadow-[0_0_30px_hsl(200,80%,73%,0.6)]"
         variants={fadeIn}
       />
@@ -28,7 +29,7 @@ const HeroStage = () => {
         className="font-mono-code text-xs sm:text-sm tracking-[0.5em] text-primary/60 mb-4"
         variants={fadeIn}
       >
-        // GPR_INVESTIGATION
+        // GP_RESEARCH — GLOBAL PERSPECTIVES
       </motion.p>
 
       <motion.h1
@@ -47,7 +48,7 @@ const HeroStage = () => {
         className="font-mono-code text-sm sm:text-base tracking-[0.3em] text-primary/80 mt-6"
         variants={fadeIn}
       >
-        A SYSTEMIC AUDIT
+        A RESEARCH PROJECT
       </motion.p>
 
       <motion.div
@@ -55,13 +56,13 @@ const HeroStage = () => {
         variants={fadeIn}
       >
         <span className="glass-panel px-4 py-2 clip-industrial">
-          Rs 2.4T CIRCULAR DEBT
+          K-ELECTRIC MONOPOLY
         </span>
         <span className="glass-panel px-4 py-2 clip-industrial">
-          17–38% T&D LOSSES
+          30–35% T&D LOSSES
         </span>
         <span className="glass-panel px-4 py-2 clip-industrial">
-          220M+ IMPACTED
+          16M+ IMPACTED
         </span>
       </motion.div>
 
