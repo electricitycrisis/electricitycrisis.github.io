@@ -1,0 +1,8 @@
+
+> bijli@0.0.0 build /home/onslaught2342/Development/projects/clients/gp/electricitycrisis.github.io
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 2158 modules transformed.
+ ELIFECYCLE  Command failed with exit code 1.
