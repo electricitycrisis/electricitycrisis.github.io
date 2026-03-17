@@ -1,1 +1,1 @@
-# Global Prespectives (GP)
+# Global Perspectives (GP)
