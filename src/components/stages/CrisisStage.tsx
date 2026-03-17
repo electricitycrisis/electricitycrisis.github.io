@@ -109,8 +109,8 @@ const supplyDemandData = [
 ];
 
 const paragraphs = [
-  "Karachi's electricity crisis is defined by a near-zero margin between peak demand and available supply. K-Electric — the city's sole vertically integrated utility — serves over 16 million people and has invested heavily in infrastructure, cutting T&D losses from 34% to 15% since 2005. Yet the gap between what is generated and what is needed remains razor-thin.",
-  "The crisis is multidimensional: expensive imported fuels drive high tariffs, political disputes between federal and provincial authorities create regulatory uncertainty, and the burden falls disproportionately on Karachi's poorest communities. At the same time, renewable energy expansion and grid modernisation offer genuine pathways forward.",
+  "Karachi's electricity crisis is defined by a single private monopoly — K-Electric — serving over 16 million people with ageing infrastructure, chronic underinvestment, and massive transmission losses. Consumers have no alternative provider, leaving them captive to rising tariffs and unreliable supply.",
+  "Electricity theft, outdated grid infrastructure, and governance failures compound K-Electric's distribution losses. Meanwhile, Karachi's industrial base — once the engine of Pakistan's economy — is haemorrhaging businesses to cities with cheaper, more reliable power, deepening the city's economic decline.",
 ];
 
 const StatCard = memo(({ s, i }: { s: (typeof stats)[0]; i: number }) => (
