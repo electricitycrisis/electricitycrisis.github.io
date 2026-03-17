@@ -13,65 +13,64 @@ const HeroStage = () => {
   return (
     <motion.section
       id="hero"
-      className="snap-section flex flex-col items-center justify-center min-h-screen relative px-4"
+      className="snap-start flex flex-col justify-center items-center min-h-screen relative px-4"
       initial="hidden"
       animate="visible"
       variants={{ visible: { transition: { staggerChildren: 0.3 } } }}
     >
-      <motion.img
-        src="/logo-no-bg.png"
-        alt="GP Logo"
-        className="w-24 h-24 sm:w-32 sm:h-32 mb-6 drop-shadow-[0_0_30px_hsl(200,80%,73%,0.6)]"
-        variants={fadeIn}
-      />
+      {/* Main content */}
+      <div className="flex flex-col items-center text-center">
+        <motion.p
+          className="font-mono-code text-xs sm:text-sm tracking-[0.5em] text-primary/60 mb-8"
+          variants={fadeIn}
+        >
+          // GP_RESEARCH — GLOBAL PERSPECTIVES
+        </motion.p>
 
-      <motion.p
-        className="font-mono-code text-xs sm:text-sm tracking-[0.5em] text-primary/60 mb-4"
-        variants={fadeIn}
-      >
-        // GP_RESEARCH — GLOBAL PERSPECTIVES
-      </motion.p>
+        <motion.h1
+          className="text-[8vw] sm:text-[10vw] leading-[0.85] font-bold text-foreground text-glow"
+          style={{ mixBlendMode: "difference" }}
+          variants={fadeIn}
+        >
+          KARACHI
+          <br />
+          <span className="text-primary">ELECTRICITY</span>
+          <br />
+          CRISIS
+        </motion.h1>
 
-      <motion.h1
-        className="text-[8vw] sm:text-[10vw] leading-[0.85] font-bold text-foreground text-glow text-center"
-        style={{ mixBlendMode: "difference" }}
-        variants={fadeIn}
-      >
-        KARACHI
-        <br />
-        <span className="text-primary">ELECTRICITY</span>
-        <br />
-        CRISIS
-      </motion.h1>
+        <motion.p
+          className="font-mono-code text-sm sm:text-base tracking-[0.3em] text-primary/80 mt-6"
+          variants={fadeIn}
+        >
+          A RESEARCH PROJECT
+        </motion.p>
 
-      <motion.p
-        className="font-mono-code text-sm sm:text-base tracking-[0.3em] text-primary/80 mt-6"
-        variants={fadeIn}
-      >
-        A RESEARCH PROJECT
-      </motion.p>
+        <motion.div
+          className="flex flex-wrap justify-center gap-4 sm:gap-8 mt-10 font-mono-code text-xs text-muted-foreground"
+          variants={fadeIn}
+        >
+          <span className="glass-panel px-4 py-2 clip-industrial">
+            PEAK: 3,563 MW DEMAND
+          </span>
+          <span className="glass-panel px-4 py-2 clip-industrial">
+            PKR 32.37/kWh TARIFF
+          </span>
+          <span className="glass-panel px-4 py-2 clip-industrial">
+            16M+ IMPACTED
+          </span>
+        </motion.div>
+      </div>
 
+      {/* Scroll indicator stays at bottom without moving the main content */}
       <motion.div
-        className="flex flex-wrap justify-center gap-4 sm:gap-8 mt-10 font-mono-code text-xs text-muted-foreground"
-        variants={fadeIn}
-      >
-        <span className="glass-panel px-4 py-2 clip-industrial">
-          K-ELECTRIC MONOPOLY
-        </span>
-        <span className="glass-panel px-4 py-2 clip-industrial">
-          30–35% T&D LOSSES
-        </span>
-        <span className="glass-panel px-4 py-2 clip-industrial">
-          16M+ IMPACTED
-        </span>
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-8 text-primary/40 font-mono-code text-xs tracking-widest"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-primary/40 font-mono-code text-xs tracking-widest text-center"
         animate={{ opacity: [0.3, 0.8, 0.3] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        SCROLL TO ENGAGE ▼
+        SCROLL TO ENGAGE
+        <br />
+        <span className="inline-block mt-2 animate-bounce">▼</span>
       </motion.div>
     </motion.section>
   );

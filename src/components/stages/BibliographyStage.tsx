@@ -1,18 +1,19 @@
 import { motion } from "framer-motion"
 
 const references = [
-  'K-Electric (2024) Annual Report 2023–2024. Karachi: K-Electric Limited.',
-  'National Electric Power Regulatory Authority (NEPRA) (2024) State of Industry Report 2023. Islamabad: NEPRA.',
-  'World Bank (2023) Pakistan — Power Sector Overview. Washington, D.C.: World Bank Group. Available at: https://www.worldbank.org/en/country/pakistan (Accessed: 10 January 2026).',
-  'Dawn News (2024) \'Karachi faces worst power outages amid K-Electric capacity shortfall\', Dawn, 15 June. Available at: https://www.dawn.com (Accessed: 12 January 2026).',
-  'Pakistan Bureau of Statistics (2024) Household Integrated Economic Survey 2023–24. Islamabad: PBS.',
-  'Geo News (2024) \'Circular debt crosses Rs 2.4 trillion mark\', Geo News, 3 March. Available at: https://www.geo.tv (Accessed: 14 January 2026).',
-  'Haque, I. ul (2023) \'The IPP crisis: How capacity payments are crippling Pakistan\', The News International, 22 September.',
-  'Asian Development Bank (2023) Pakistan Energy Sector Assessment, Strategy, and Road Map. Manila: ADB.',
-  'Express Tribune (2024) \'K-Electric T&D losses remain above 30%\', The Express Tribune, 8 August.',
-  'Sustainable Development Policy Institute (SDPI) (2023) Energy Security and Governance in Pakistan. Islamabad: SDPI.',
-  'International Energy Agency (IEA) (2023) Pakistan — Country Profile. Paris: IEA. Available at: https://www.iea.org/countries/pakistan (Accessed: 15 January 2026).',
-  'Karachi Chamber of Commerce and Industry (KCCI) (2024) Impact of Electricity Tariffs on Small Businesses in Karachi. Karachi: KCCI.',
+  'The Friday Times (2026) \'Year In Review: K-Electric Shows Steady Progress During 2025\', The Friday Times, 3 January. Available at: https://www.thefridaytimes.com/03-Jan-2026/year-review-k-electric-shows-steady-progress-2025 (Accessed: 15 March 2026).',
+  'Business Recorder (2026) \'Karachi\'s industrial areas badly hit by load-shedding: study\', Business Recorder. Available at: https://www.brecorder.com/news/40410150 (Accessed: 15 March 2026).',
+  'The Standard (2025) \'NEPRA Reduces Tariff Determination for KE\', The Standard. Available at: https://thestandard.com.pk/nepra-reduces-tariff-determination-for-ke/ (Accessed: 15 March 2026).',
+  'Business Recorder (2025) \'Payment dispute between CPPA-G, KE remains unresolved\', Business Recorder. Available at: https://www.brecorder.com/news/40368721 (Accessed: 14 March 2026).',
+  'The News International (2022) \'KE says transmission, distribution losses reduced to 15pc in FY22\', The News International. Available at: https://www.thenews.com.pk/print/1012680 (Accessed: 14 March 2026).',
+  'K-Electric (2025) \'NEPRA Concludes Hearing on K-Electric\'s Power Acquisition Programme\'. Available at: https://ke.com.pk/nepra-concludes-hearing-on-k-electrics-ke-power-acquisition-programme/ (Accessed: 14 March 2026).',
+  'Dawn (2018) \'Federal, Sindh govts spar over Karachi power crisis\', Dawn, 12 April. Available at: https://www.dawn.com/news/1402893 (Accessed: 12 January 2026).',
+  'Profit by Pakistan Today (2025) \'Sindh launches SEPRA to cut Karachi\'s power costs, bypassing NEPRA tariffs\', Pakistan Today, 12 August. Available at: https://profit.pakistantoday.com.pk/2025/08/12/sindh-launches-sepra-to-cut-karachis-power-costs-bypassing-nepra-tariffs/ (Accessed: 15 March 2026).',
+  'Business Recorder (2025) \'Forced load-shedding: Nepra issues show-cause notice to KE\', Business Recorder. Available at: https://www.brecorder.com/news/40369502 (Accessed: 14 March 2026).',
+  'Afghan Diaspora Network (2025) \'Pakistan\'s Power and Energy Crisis: Chronic Outages, Rising Costs, and a Dark Future\', ADN, 29 July. Available at: https://afghandiaspora.org/2025/07/29/pakistans-power-and-energy-crisis/ (Accessed: 15 March 2026).',
+  'Al Jazeera (2019) \'Lights out: Circular debt cripples Pakistan\'s power sector\', Al Jazeera, 24 May. Available at: https://www.aljazeera.com/economy/2019/5/24/ (Accessed: 14 January 2026).',
+  'K-Electric (2025) Generation. Available at: https://ke.com.pk/generation/ (Accessed: 14 March 2026).',
+  'Carbon Brief (2023) \'The Carbon Brief Profile: Pakistan\'. Available at: https://interactive.carbonbrief.org/the-carbon-brief-profile-pakistan/ (Accessed: 15 January 2026).',
 ]
 
 const BibliographyStage = () => {

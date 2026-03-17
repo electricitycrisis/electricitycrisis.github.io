@@ -184,11 +184,11 @@ const PowerNexus = () => {
     }
     arcsRef.current = arcs;
     initMatrix(width);
-    initParticlePool(80);
-    for (let i = 0; i < 25; i++) spawnParticle();
+    initParticlePool(60); // Reduced from 80
+    for (let i = 0; i < 20; i++) spawnParticle(); // Reduced from 25
   }, [initMatrix, initParticlePool, spawnParticle]);
 
-  const generateBolt = useCallback((sx: number, sy: number, ex: number, ey: number, depth: number = 5, randomness: number = 0.35): { x: number; y: number }[] => {
+  const generateBolt = useCallback((sx: number, sy: number, ex: number, ey: number, depth: number = 4, randomness: number = 0.35): { x: number; y: number }[] => {
     const points: { x: number; y: number }[] = [{ x: sx, y: sy }];
     const subdivide = (start: { x: number; y: number }, end: { x: number; y: number }, d: number): { x: number; y: number }[] => {
       if (d === 0) return [end];
@@ -211,8 +211,8 @@ const PowerNexus = () => {
     const sy = side === 0 ? 0 : side === 2 ? s.height : Math.random() * s.height;
     const ex = s.centerX + (Math.random() - 0.5) * 200;
     const ey = s.centerY + (Math.random() - 0.5) * 200;
-    boltsRef.current.push({ points: generateBolt(sx, sy, ex, ey, 5, 0.4), alpha: 1, decay: 1.5 + Math.random() * 0.6, hue: theme.primary + (Math.random() - 0.5) * 20, width: 2 + Math.random() * 2 });
-    if (boltsRef.current.length > 15) boltsRef.current.shift();
+    boltsRef.current.push({ points: generateBolt(sx, sy, ex, ey, 4, 0.4), alpha: 1, decay: 1.5 + Math.random() * 0.6, hue: theme.primary + (Math.random() - 0.5) * 20, width: 2 + Math.random() * 2 });
+    if (boltsRef.current.length > 12) boltsRef.current.shift(); // Reduced from 15
   }, [generateBolt]);
 
   const drawBoltPath = (ctx: CanvasRenderingContext2D, points: { x: number; y: number }[]) => {
@@ -247,6 +247,9 @@ const PowerNexus = () => {
     const s = stateRef.current;
     const theme = COLOR_THEMES[themeRef.current];
     let activeCount = 0;
+    
+    // Batch particle drawing if they share colors, but they don't really.
+    // Instead, simplify each particle to fewer draw calls.
     for (let i = 0; i < particlesRef.current.length; i++) {
       const p = particlesRef.current[i];
       if (!p.active) continue;
@@ -263,18 +266,22 @@ const PowerNexus = () => {
       p.life -= dt;
       if (dist < 50 + surge * 30) { p.alpha *= 0.9; p.size *= 0.95; }
       if (p.life <= 0 || p.alpha < 0.02 || p.size < 0.3) { p.active = false; continue; }
+      
       const lifeRatio = p.life / p.maxLife;
       const alpha = p.alpha * lifeRatio;
       const size = p.size * (0.5 + lifeRatio * 0.5);
-      ctx.fillStyle = `hsla(${p.hue},100%,60%,${alpha * 0.3})`; ctx.beginPath(); ctx.arc(p.x, p.y, size * 2.5, 0, TWO_PI); ctx.fill();
-      ctx.fillStyle = `hsla(${p.hue},95%,65%,${alpha * 0.6})`; ctx.beginPath(); ctx.arc(p.x, p.y, size * 1.5, 0, TWO_PI); ctx.fill();
-      ctx.fillStyle = `hsla(${p.hue},80%,80%,${alpha})`; ctx.beginPath(); ctx.arc(p.x, p.y, size, 0, TWO_PI); ctx.fill();
-      ctx.fillStyle = `hsla(${p.hue},50%,95%,${alpha * 0.9})`; ctx.beginPath(); ctx.arc(p.x, p.y, size * 0.4, 0, TWO_PI); ctx.fill();
+
+      // Simplified particle drawing: 2 arcs instead of 4
+      ctx.fillStyle = `hsla(${p.hue},100%,65%,${alpha * 0.4})`; ctx.beginPath(); ctx.arc(p.x, p.y, size * 2, 0, TWO_PI); ctx.fill();
+      ctx.fillStyle = `hsla(${p.hue},80%,90%,${alpha * 0.8})`; ctx.beginPath(); ctx.arc(p.x, p.y, size * 0.8, 0, TWO_PI); ctx.fill();
+      
       const speed = Math.abs(p.vx) + Math.abs(p.vy);
-      if (speed > 15) { ctx.strokeStyle = `hsla(${p.hue},100%,70%,${alpha * 0.4})`; ctx.lineWidth = size * 0.5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 0.08, p.y - p.vy * 0.08); ctx.stroke(); }
+      if (speed > 25) { // Increased threshold from 15
+        ctx.strokeStyle = `hsla(${p.hue},100%,70%,${alpha * 0.3})`; ctx.lineWidth = size * 0.4; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 0.06, p.y - p.vy * 0.06); ctx.stroke();
+      }
     }
     const params = MODE_PARAMS[modeRef.current];
-    if (activeCount < params.maxParticles && Math.random() < dt * 3) {
+    if (activeCount < params.maxParticles && Math.random() < dt * 2.5) {
       const inactive = particlesRef.current.find(p => !p.active);
       if (inactive) {
         const edge = Math.random() * 4 | 0;
@@ -295,13 +302,14 @@ const PowerNexus = () => {
       if (bolt.alpha <= 0) { boltsRef.current.splice(b, 1); continue; }
       const pts = bolt.points; if (pts.length < 2) continue;
       ctx.globalAlpha = bolt.alpha;
+      
+      // Simplified bolt: 3 strokes instead of 5
       ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
       for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
-      ctx.strokeStyle = `hsla(${bolt.hue},100%,55%,0.08)`; ctx.lineWidth = bolt.width * 10; ctx.stroke();
-      ctx.strokeStyle = `hsla(${bolt.hue},100%,60%,0.15)`; ctx.lineWidth = bolt.width * 6; ctx.stroke();
-      ctx.strokeStyle = `hsla(${bolt.hue},100%,65%,0.35)`; ctx.lineWidth = bolt.width * 3; ctx.stroke();
-      ctx.strokeStyle = `hsla(${bolt.hue},100%,75%,0.95)`; ctx.lineWidth = bolt.width * 1.2; ctx.stroke();
-      ctx.strokeStyle = 'rgba(255,255,255,0.95)'; ctx.lineWidth = bolt.width * 0.4; ctx.stroke();
+      
+      ctx.strokeStyle = `hsla(${bolt.hue},100%,60%,0.2)`; ctx.lineWidth = bolt.width * 5; ctx.stroke();
+      ctx.strokeStyle = `hsla(${bolt.hue},100%,75%,0.6)`; ctx.lineWidth = bolt.width * 2; ctx.stroke();
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = bolt.width * 0.6; ctx.stroke();
     }
     ctx.globalAlpha = 1;
   }, []);
@@ -341,6 +349,8 @@ const PowerNexus = () => {
     }
   }, []);
 
+  const logoImgRef = useRef<HTMLImageElement | null>(null);
+
   const drawLogo = useCallback((ctx: CanvasRenderingContext2D, _time: number, surge: number) => {
     const s = stateRef.current;
     const theme = COLOR_THEMES[themeRef.current];
@@ -353,24 +363,14 @@ const PowerNexus = () => {
     grad.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(s.centerX, s.centerY, glowSize, 0, TWO_PI); ctx.fill();
 
-    ctx.strokeStyle = `rgba(${theme.r},${theme.g},${theme.b},${0.35 + surge * 0.35})`;
-    ctx.lineWidth = 2.5 + surge * 1.5;
-    ctx.beginPath();
-    for (let i = 0; i < 6; i++) { const a = (i * TWO_PI) / 6 - Math.PI / 2; const x = s.centerX + Math.cos(a) * size * 0.68; const y = s.centerY + Math.sin(a) * size * 0.68; i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
-    ctx.closePath(); ctx.stroke();
-
-    ctx.strokeStyle = `rgba(${theme.ra},${theme.ga},${theme.ba},${0.45 + surge * 0.4})`;
-    ctx.lineWidth = 1.8;
-    ctx.beginPath();
-    for (let i = 0; i < 6; i++) { const a = (i * TWO_PI) / 6 - Math.PI / 2; const x = s.centerX + Math.cos(a) * size * 0.52; const y = s.centerY + Math.sin(a) * size * 0.52; i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
-    ctx.closePath(); ctx.stroke();
-
-    const bolt = [{ x: 0, y: -0.48 }, { x: 0.24, y: -0.08 }, { x: 0.07, y: -0.08 }, { x: 0.18, y: 0.48 }, { x: -0.14, y: 0.04 }, { x: 0.01, y: 0.04 }, { x: -0.11, y: -0.48 }];
-    ctx.fillStyle = `rgba(255,255,255,${0.88 + surge * 0.1})`;
-    ctx.beginPath(); ctx.moveTo(s.centerX + bolt[0].x * size, s.centerY + bolt[0].y * size);
-    for (let i = 1; i < bolt.length; i++) ctx.lineTo(s.centerX + bolt[i].x * size, s.centerY + bolt[i].y * size);
-    ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = `rgba(${theme.ra},${theme.ga},${theme.ba},0.7)`; ctx.lineWidth = 1.5; ctx.stroke();
+    // Draw the logo image instead of hexagons + bolt
+    const img = logoImgRef.current;
+    if (img && img.complete && img.naturalWidth > 0) {
+      const imgSize = size * 1.4;
+      ctx.globalAlpha = 0.88 + surge * 0.12;
+      ctx.drawImage(img, s.centerX - imgSize / 2, s.centerY - imgSize / 2, imgSize, imgSize);
+      ctx.globalAlpha = 1;
+    }
   }, []);
 
   const generateInnerBolt = useCallback((sx: number, sy: number, ex: number, ey: number, depth: number): { x: number; y: number }[] => {
@@ -392,7 +392,14 @@ const PowerNexus = () => {
     const s = stateRef.current;
     const theme = COLOR_THEMES[themeRef.current];
     const size = Math.min(s.width, s.height) * 0.11;
-    const boltPoints = [{ x: 0, y: -0.5 }, { x: 0.25, y: -0.1 }, { x: 0.08, y: -0.1 }, { x: 0.2, y: 0.5 }, { x: -0.15, y: 0.05 }, { x: 0.02, y: 0.05 }, { x: -0.12, y: -0.5 }].map(p => ({ x: s.centerX + p.x * size, y: s.centerY + p.y * size }));
+    const logoRadius = size * 0.7;
+    // Generate points around the logo edge instead of bolt polygon
+    const numEdgePoints = 8;
+    const boltPoints: { x: number; y: number }[] = [];
+    for (let i = 0; i < numEdgePoints; i++) {
+      const angle = (i / numEdgePoints) * TWO_PI;
+      boltPoints.push({ x: s.centerX + Math.cos(angle) * logoRadius, y: s.centerY + Math.sin(angle) * logoRadius });
+    }
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     const numActivePoints = Math.floor(2 + surge * 4 + Math.sin(time * 3) * 2);
     for (let i = 0; i < Math.min(numActivePoints, boltPoints.length); i++) {
@@ -587,6 +594,11 @@ const PowerNexus = () => {
   }, [initRings]);
 
   useEffect(() => {
+    // Load logo image
+    const img = new Image();
+    img.src = '/logo-no-bg.png';
+    logoImgRef.current = img;
+
     handleResize();
     window.addEventListener('resize', handleResize);
     animationRef.current = requestAnimationFrame(animate);

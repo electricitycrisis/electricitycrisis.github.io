@@ -1,0 +1,21 @@
+{
+  "name": "GP — Karachi's Electricity Crisis",
+  "short_name": "GP Crisis",
+  "description": "A GP (Global Perspectives) research project examining Karachi's electricity crisis.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070a12",
+  "theme_color": "#070a12",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
