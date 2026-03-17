@@ -9,6 +9,7 @@
     "build-github": "vite build && cp dist/index.html dist/404.html",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
+    "lint-prettier": "prettier --write .",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

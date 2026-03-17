@@ -1,9 +1,9 @@
-import { motion } from "framer-motion"
-import { Link } from "react-router-dom"
-import PowerNexus from "@/components/PowerNexus"
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import PowerNexus from "@/components/PowerNexus";
 
 // Add image URLs here
-const images: string[] = []
+const images: string[] = [];
 
 const Assembly = () => {
   return (
@@ -70,7 +70,7 @@ const Assembly = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Assembly
+export default Assembly;

@@ -1,10 +1,11 @@
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const milestones = [
   {
     title: "CLASS ASSEMBLY",
-    description: "Educating peers about the causes and consequences of the electricity crisis in Karachi, and what can be done to mitigate them.",
+    description:
+      "Educating peers about the causes and consequences of the electricity crisis in Karachi, and what can be done to mitigate them.",
     success: "Reviews of students who attended",
     tag: "AWARENESS",
     link: "/assembly",
@@ -12,7 +13,8 @@ const milestones = [
   },
   {
     title: "POSTER CAMPAIGN",
-    description: "Visual reminders deployed across the campus to encourage electricity conservation habits.",
+    description:
+      "Visual reminders deployed across the campus to encourage electricity conservation habits.",
     success: "If appliances are being turned off after use or not",
     tag: "ACTION",
     link: "/posters",
@@ -20,23 +22,24 @@ const milestones = [
   },
   {
     title: "INSTAGRAM AWARENESS",
-    description: "Raising awareness online through Instagram — reaching wider audiences beyond the campus.",
+    description:
+      "Raising awareness online through Instagram — reaching wider audiences beyond the campus.",
     success: "Follower and view count of our page",
     tag: "DIGITAL",
     link: "https://www.instagram.com/electricitycrisis/",
     linkLabel: "Visit Instagram →",
     external: true,
   },
-]
+];
 
 const PlanStage = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
-  })
+  });
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <motion.section
@@ -98,7 +101,10 @@ const PlanStage = () => {
             >
               <div
                 className="absolute left-4 sm:left-6 w-4 h-4 rounded-full border-2 border-accent bg-background"
-                style={{ animation: "pulse-green 2s infinite", animationDelay: `${i * 0.5}s` }}
+                style={{
+                  animation: "pulse-green 2s infinite",
+                  animationDelay: `${i * 0.5}s`,
+                }}
               />
 
               <div className="glass-panel clip-industrial p-6">
@@ -142,7 +148,7 @@ const PlanStage = () => {
         </div>
       </div>
     </motion.section>
-  )
-}
+  );
+};
 
-export default PlanStage
+export default PlanStage;

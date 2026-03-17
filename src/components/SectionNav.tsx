@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const sections = [
   { id: "hero", label: "Hero" },
@@ -8,38 +8,38 @@ const sections = [
   { id: "logistics", label: "Logistics" },
   { id: "plan", label: "Plan" },
   { id: "bibliography", label: "Bibliography" },
-]
+];
 
 const SectionNav = () => {
-  const [active, setActive] = useState("hero")
+  const [active, setActive] = useState("hero");
 
   useEffect(() => {
-    const scrollContainer = document.querySelector(".scroll-container")
-    if (!scrollContainer) return
+    const scrollContainer = document.querySelector(".scroll-container");
+    if (!scrollContainer) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActive(entry.target.id)
+            setActive(entry.target.id);
           }
-        })
+        });
       },
-      { root: scrollContainer, threshold: 0.4 }
-    )
+      { root: scrollContainer, threshold: 0.4 },
+    );
 
     sections.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   const handleClick = (id: string) => {
-    const el = document.getElementById(id)
-    el?.scrollIntoView({ behavior: "smooth" })
-  }
+    const el = document.getElementById(id);
+    el?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3">
@@ -64,7 +64,7 @@ const SectionNav = () => {
         </button>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default SectionNav
+export default SectionNav;

@@ -1,11 +1,11 @@
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 const roles = [
   { name: "MUHAMMAD USMAN KHAN", role: "Videography", icon: "▶" },
   { name: "ABDUL NAFAY", role: "File Organisation", icon: "◆" },
   { name: "ABDULLAH IBNE ALI", role: "Video Editor & Design", icon: "◈" },
   { name: "MUHAMMAD HASAN HYDARI", role: "Team Coordinator", icon: "◉" },
-]
+];
 
 const LogisticsStage = () => {
   return (
@@ -43,12 +43,12 @@ const LogisticsStage = () => {
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        Our research encompassed <span className="text-primary">political</span>,{" "}
-        <span className="text-primary">economical</span>,{" "}
+        Our research encompassed <span className="text-primary">political</span>
+        , <span className="text-primary">economical</span>,{" "}
         <span className="text-primary">social</span>, and{" "}
-        <span className="text-primary">technological</span> lenses — conducting primary
-        research surveys, personal testimonies, and interviews alongside secondary
-        research for professional perspectives.
+        <span className="text-primary">technological</span> lenses — conducting
+        primary research surveys, personal testimonies, and interviews alongside
+        secondary research for professional perspectives.
       </motion.p>
 
       <motion.p
@@ -58,7 +58,8 @@ const LogisticsStage = () => {
         viewport={{ once: true }}
         transition={{ delay: 0.3 }}
       >
-        Sources include NEPRA reports, World Bank energy data, and first-hand community interviews in Karachi.
+        Sources include NEPRA reports, World Bank energy data, and first-hand
+        community interviews in Karachi.
       </motion.p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl w-full">
@@ -81,7 +82,9 @@ const LogisticsStage = () => {
               </span>
             </div>
 
-            <div className="font-mono-code text-xs text-primary/70 mb-1">{r.name}</div>
+            <div className="font-mono-code text-xs text-primary/70 mb-1">
+              {r.name}
+            </div>
             <div className="text-foreground text-sm font-medium">{r.role}</div>
 
             <motion.div
@@ -96,7 +99,7 @@ const LogisticsStage = () => {
         ))}
       </div>
     </motion.section>
-  )
-}
+  );
+};
 
-export default LogisticsStage
+export default LogisticsStage;
