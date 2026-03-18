@@ -1,0 +1,51 @@
+name: Google Indexing Trigger
+
+on:
+  workflow_run:
+    workflows: ["Build and Deploy to GitHub Pages"]
+    types:
+      - completed
+
+jobs:
+  notify-google:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install google-api-python-client google-auth google-auth-httplib2 google-auth-oauthlib
+
+      - name: Notify Google Indexing API
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_INDEXING_JSON }}
+        run: |
+          echo "$GOOGLE_APPLICATION_CREDENTIALS" > service_account.json
+          
+          python3 - <<'PYTHON_SCRIPT'
+import json
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+
+# Load credentials
+creds = service_account.Credentials.from_service_account_file(
+    "service_account.json",
+    scopes=["https://www.googleapis.com/auth/indexing"]
+)
+
+service = build("indexing", "v3", credentials=creds)
+
+# URLs to notify
+urls = [
+    "https://electricitycrisis.github.io/"
+]
+
+for url in urls:
+    body = {"url": url, "type": "URL_UPDATED"}
+    response = service.urlNotifications().publish(body=body).execute()
+    print(response)
+PYTHON_SCRIPT
