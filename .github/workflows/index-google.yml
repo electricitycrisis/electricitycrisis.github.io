@@ -24,28 +24,4 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_INDEXING_JSON }}
         run: |
-          echo "$GOOGLE_APPLICATION_CREDENTIALS" > service_account.json
-          
-          python3 - <<'PYTHON_SCRIPT'
-import json
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-
-# Load credentials
-creds = service_account.Credentials.from_service_account_file(
-    "service_account.json",
-    scopes=["https://www.googleapis.com/auth/indexing"]
-)
-
-service = build("indexing", "v3", credentials=creds)
-
-# URLs to notify
-urls = [
-    "https://electricitycrisis.github.io/"
-]
-
-for url in urls:
-    body = {"url": url, "type": "URL_UPDATED"}
-    response = service.urlNotifications().publish(body=body).execute()
-    print(response)
-PYTHON_SCRIPT
+          python3 scripts/google_index.py
