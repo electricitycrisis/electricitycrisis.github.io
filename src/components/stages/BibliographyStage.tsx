@@ -16,6 +16,27 @@ const references = [
   "Carbon Brief (2023) 'The Carbon Brief Profile: Pakistan'. Available at: https://interactive.carbonbrief.org/the-carbon-brief-profile-pakistan/ (Accessed: 15 January 2026).",
 ];
 
+const urlRegex = /(https?:\/\/[^\s)]+)/g;
+
+const renderRefWithLinks = (text: string) => {
+  const parts = text.split(urlRegex);
+  return parts.map((part, i) =>
+    urlRegex.test(part) ? (
+      <a
+        key={i}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary/60 hover:text-primary underline underline-offset-2 transition-colors break-all"
+      >
+        {part}
+      </a>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+};
+
 const BibliographyStage = () => {
   return (
     <motion.section
@@ -45,17 +66,20 @@ const BibliographyStage = () => {
         BIBLIOGRAPHY
       </motion.h2>
 
-      <div className="max-w-3xl w-full space-y-3">
+      <div data-gsap="stagger" className="max-w-3xl w-full space-y-3">
         {references.map((ref, i) => (
           <motion.div
             key={i}
-            className="glass-panel p-4 text-xs sm:text-sm text-muted-foreground leading-relaxed font-mono-code"
+            className="glass-panel p-4 text-xs sm:text-sm text-muted-foreground leading-relaxed font-mono-code flex gap-3"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.05 }}
           >
-            {ref}
+            <span className="text-primary/30 shrink-0 tabular-nums">
+              [{String(i + 1).padStart(2, "0")}]
+            </span>
+            <span>{renderRefWithLinks(ref)}</span>
           </motion.div>
         ))}
       </div>

@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import path from "path";
 import viteCompression from "vite-plugin-compression";
 
@@ -58,7 +58,6 @@ export default defineConfig(({ mode }) => {
               return "vendor";
             }
           },
-          compact: true,
           entryFileNames: "assets/[name]-[hash].js",
           chunkFileNames: "assets/[name]-[hash].js",
           assetFileNames: "assets/[name]-[hash][extname]",
@@ -66,14 +65,8 @@ export default defineConfig(({ mode }) => {
       },
     },
 
-    esbuild: {
-      drop: isProd ? ["console", "debugger"] : [],
-      legalComments: "none",
-    },
-
     optimizeDeps: {
       include: ["react", "react-dom"],
-      esbuildOptions: { target: "es2020" },
     },
 
     preview: {

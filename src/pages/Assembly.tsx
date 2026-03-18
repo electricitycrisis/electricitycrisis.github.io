@@ -1,9 +1,15 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import PowerNexus from "@/components/PowerNexus";
+import ImageCollection from "@/components/ImageCollection";
 
-// Add image URLs here
-const images: string[] = [];
+const collections = [
+  {
+    title: "ASSEMBLY PHOTOS",
+    subtitle: "// AWARENESS_EVENT",
+    images: [] as string[],
+  },
+];
 
 const Assembly = () => {
   return (
@@ -18,7 +24,7 @@ const Assembly = () => {
         </Link>
 
         <motion.h1
-          className="text-3xl sm:text-4xl font-bold text-foreground text-glow mb-4 tracking-wider"
+          className="text-3xl sm:text-4xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -26,7 +32,7 @@ const Assembly = () => {
         </motion.h1>
 
         <motion.p
-          className="font-mono-code text-xs text-primary/50 mb-12"
+          className="font-mono-code text-xs text-primary/50 mb-12 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -34,40 +40,22 @@ const Assembly = () => {
           // AWARENESS_EVENT
         </motion.p>
 
-        {images.length === 0 ? (
-          <motion.div
-            className="glass-panel clip-industrial p-16 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <p className="font-mono-code text-sm text-muted-foreground">
-              // NO_IMAGES_LOADED
-            </p>
-            <p className="text-xs text-muted-foreground/50 mt-2">
-              Images will appear here once added to the array.
-            </p>
-          </motion.div>
-        ) : (
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {images.map((src, i) => (
-              <motion.div
-                key={i}
-                className="glass-panel overflow-hidden break-inside-avoid"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <img
-                  src={src}
-                  alt={`Assembly image ${i + 1}`}
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
-              </motion.div>
-            ))}
-          </div>
-        )}
+        <div className="space-y-6">
+          {collections.map((col, i) => (
+            <motion.div
+              key={col.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + i * 0.15 }}
+            >
+              <ImageCollection
+                title={col.title}
+                subtitle={col.subtitle}
+                images={col.images}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );

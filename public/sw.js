@@ -1,12 +1,17 @@
-const CACHE_NAME = "gp-crisis-v1";
+const CACHE_NAME = "gp-crisis-v2";
 const ASSETS = [
   "/",
   "/index.html",
+  "/manifest.json",
   "/logo.png",
   "/logo-no-bg.png",
   "/logo.svg",
+  "/favicon.ico",
+  "/favicon-16x16.png",
+  "/favicon-32x32.png",
   "/android-chrome-192x192.png",
   "/android-chrome-512x512.png",
+  "/apple-touch-icon.png",
 ];
 
 self.addEventListener("install", (event) => {

@@ -457,21 +457,21 @@ const PowerNexus = () => {
 
   const initMatrix = useCallback((width: number) => {
     const drops: MatrixDrop[] = [];
-    const colWidth = 25;
+    const colWidth = 20;
     const cols = Math.floor(width / colWidth);
     for (let i = 0; i < cols; i++) {
-      if (Math.random() > 0.65) {
-        const len = 4 + Math.floor(Math.random() * 10);
+      if (Math.random() > 0.45) {
+        const len = 5 + Math.floor(Math.random() * 14);
         const chars: string[] = [];
         for (let j = 0; j < len; j++)
           chars.push(MATRIX_CHARS[(Math.random() * MATRIX_CHARS.length) | 0]);
         drops.push({
           x: i * colWidth + colWidth / 2,
           y: Math.random() * -400,
-          speed: 40 + Math.random() * 80,
+          speed: 50 + Math.random() * 100,
           chars,
           length: len,
-          opacity: 0.08 + Math.random() * 0.2,
+          opacity: 0.10 + Math.random() * 0.25,
         });
       }
     }
@@ -803,7 +803,7 @@ const PowerNexus = () => {
         s.centerY,
         glowSize,
       );
-      const intensity = 0.35 + surge * 0.5;
+      const intensity = 0.45 + surge * 0.6;
       grad.addColorStop(
         0,
         `rgba(${theme.r},${theme.g},${theme.b},${intensity})`,

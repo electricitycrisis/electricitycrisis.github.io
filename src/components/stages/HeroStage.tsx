@@ -13,7 +13,7 @@ const HeroStage = () => {
   return (
     <motion.section
       id="hero"
-      className="snap-start flex flex-col justify-center items-center min-h-screen relative px-4"
+      className="snap-section flex flex-col justify-center items-center min-h-screen relative px-4"
       initial="hidden"
       animate="visible"
       variants={{ visible: { transition: { staggerChildren: 0.3 } } }}

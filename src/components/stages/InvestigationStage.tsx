@@ -128,6 +128,7 @@ const InvestigationStage = () => {
       </motion.p>
 
       <div
+        data-gsap="stagger"
         className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full"
         style={{ perspective: "1000px" }}
       >

@@ -2,6 +2,7 @@ import { lazy, Suspense, memo, useEffect } from "react";
 import PowerNexus from "@/components/PowerNexus";
 import SectionNav from "@/components/SectionNav";
 import { motion } from "framer-motion";
+import useScrollAnimations from "@/hooks/useScrollAnimations";
 
 // Lazy load stages
 const HeroStage = lazy(() => import("@/components/stages/HeroStage"));
@@ -26,8 +27,9 @@ const LoadingFallback = () => (
 );
 
 const Index = () => {
+  useScrollAnimations();
+
   useEffect(() => {
-    // Force scroll to top on mount
     const container = document.querySelector(".scroll-container");
     if (container) {
       container.scrollTop = 0;
@@ -44,23 +46,23 @@ const Index = () => {
         <Suspense fallback={<LoadingFallback />}>
           <HeroStage />
 
-          <div className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
 
           <CrisisStage />
 
-          <div className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
 
           <InvestigationStage />
 
-          <div className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
 
           <LogisticsStage />
 
-          <div className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
 
           <PlanStage />
 
-          <div className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
 
           <BibliographyStage />
 
@@ -72,14 +74,14 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <img
-              src="/logo.svg"
+              src="/logo-no-bg.png"
               alt="GP Logo"
               className="w-10 h-10 mx-auto mb-4 opacity-40"
             />
             <div className="mb-2 text-primary/40">// END_TRANSMISSION</div>
             <div>GP — KARACHI'S ELECTRICITY CRISIS — 2026</div>
             <div className="mt-1 text-[10px] text-muted-foreground/50">
-              USMAN • ABDUL NAFAY • ABDULLAH • HASAN
+              MUHAMMAD USMAN KHAN • ABDUL NAFAY • ABDULLAH IBNE ALI • MUHAMMAD HASAN HYDARI
             </div>
           </motion.footer>
         </Suspense>

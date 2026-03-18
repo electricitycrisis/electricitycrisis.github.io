@@ -169,17 +169,11 @@ const PestelCard = memo(
             {f.title}
           </span>
         </div>
-        <motion.p
-          className="text-xs text-muted-foreground leading-relaxed"
-          initial={false}
-          animate={{
-            height: isExpanded ? "auto" : "3.6em",
-            opacity: 1,
-          }}
-          style={{ overflow: "hidden" }}
+        <div
+          className={`text-xs text-muted-foreground leading-relaxed overflow-hidden transition-all duration-300 ${isExpanded ? "max-h-96" : "max-h-[3.6em]"}`}
         >
           {f.summary}
-        </motion.p>
+        </div>
         <span className="font-mono-code text-[9px] text-primary/30 mt-2 block">
           {isExpanded ? "▲ COLLAPSE" : "▼ EXPAND"}
         </span>
@@ -217,21 +211,25 @@ const CrisisStage = () => {
         THE SCALE OF THE CRISIS
       </motion.h2>
 
-      {paragraphs.map((p, i) => (
-        <motion.p
-          key={i}
-          className="text-sm sm:text-base text-muted-foreground max-w-3xl text-center mb-4 leading-relaxed"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 + i * 0.15 }}
-        >
-          {p}
-        </motion.p>
-      ))}
+      <motion.div
+        className="glass-panel clip-industrial p-6 sm:p-8 max-w-3xl w-full mb-6"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+      >
+        {paragraphs.map((p, i) => (
+          <p
+            key={i}
+            className="text-sm sm:text-base text-muted-foreground text-center leading-relaxed mb-3 last:mb-0"
+          >
+            {p}
+          </p>
+        ))}
+      </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl w-full mt-10">
+      <div data-gsap="stagger" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl w-full mt-10">
         {stats.map((s, i) => (
           <StatCard key={s.label} s={s} i={i} />
         ))}
@@ -297,7 +295,7 @@ const CrisisStage = () => {
         <h3 className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-6 text-center">
           // PESTEL_ANALYSIS
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div data-gsap="stagger" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {pestelFactors.map((f, i) => (
             <PestelCard key={f.key} f={f} i={i} />
           ))}
