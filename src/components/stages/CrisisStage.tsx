@@ -229,7 +229,10 @@ const CrisisStage = () => {
       </motion.div>
 
       {/* Stats Grid */}
-      <div data-gsap="stagger" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl w-full mt-10">
+      <div
+        data-gsap="stagger"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl w-full mt-10"
+      >
         {stats.map((s, i) => (
           <StatCard key={s.label} s={s} i={i} />
         ))}
@@ -295,7 +298,10 @@ const CrisisStage = () => {
         <h3 className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-6 text-center">
           // PESTEL_ANALYSIS
         </h3>
-        <div data-gsap="stagger" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          data-gsap="stagger"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           {pestelFactors.map((f, i) => (
             <PestelCard key={f.key} f={f} i={i} />
           ))}

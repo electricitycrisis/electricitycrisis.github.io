@@ -471,7 +471,7 @@ const PowerNexus = () => {
           speed: 50 + Math.random() * 100,
           chars,
           length: len,
-          opacity: 0.10 + Math.random() * 0.25,
+          opacity: 0.1 + Math.random() * 0.25,
         });
       }
     }

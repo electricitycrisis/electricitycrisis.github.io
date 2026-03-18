@@ -41,12 +41,18 @@ const ImageCollection = ({ title, subtitle, images }: ImageCollectionProps) => {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="shrink-0 w-48">
-          <h3 className="text-sm font-bold text-foreground tracking-wider">{title}</h3>
+          <h3 className="text-sm font-bold text-foreground tracking-wider">
+            {title}
+          </h3>
           {subtitle && (
-            <p className="font-mono-code text-[10px] text-primary/40 mt-1">{subtitle}</p>
+            <p className="font-mono-code text-[10px] text-primary/40 mt-1">
+              {subtitle}
+            </p>
           )}
         </div>
-        <p className="font-mono-code text-xs text-muted-foreground">// NO_DATA_LOADED</p>
+        <p className="font-mono-code text-xs text-muted-foreground">
+          // NO_DATA_LOADED
+        </p>
       </motion.div>
     );
   }
@@ -61,9 +67,13 @@ const ImageCollection = ({ title, subtitle, images }: ImageCollectionProps) => {
         <div className="flex flex-col sm:flex-row items-start gap-6">
           {/* Label */}
           <div className="shrink-0 sm:w-48 sm:pt-4">
-            <h3 className="text-sm font-bold text-foreground tracking-wider">{title}</h3>
+            <h3 className="text-sm font-bold text-foreground tracking-wider">
+              {title}
+            </h3>
             {subtitle && (
-              <p className="font-mono-code text-[10px] text-primary/40 mt-1">{subtitle}</p>
+              <p className="font-mono-code text-[10px] text-primary/40 mt-1">
+                {subtitle}
+              </p>
             )}
             <p className="font-mono-code text-[10px] text-muted-foreground/50 mt-2">
               {images.length} {images.length === 1 ? "FILE" : "FILES"}
@@ -163,7 +173,8 @@ const ImageCollection = ({ title, subtitle, images }: ImageCollectionProps) => {
 
             {/* Counter */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 font-mono-code text-xs text-primary/60">
-              {String(selectedIndex + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
+              {String(selectedIndex + 1).padStart(2, "0")} /{" "}
+              {String(images.length).padStart(2, "0")}
             </div>
           </motion.div>
         )}

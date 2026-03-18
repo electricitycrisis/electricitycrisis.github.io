@@ -62,7 +62,10 @@ const LogisticsStage = () => {
         community interviews in Karachi.
       </motion.p>
 
-      <div data-gsap="stagger" className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl w-full">
+      <div
+        data-gsap="stagger"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl w-full"
+      >
         {roles.map((r, i) => (
           <motion.div
             key={r.name}

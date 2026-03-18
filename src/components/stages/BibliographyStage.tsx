@@ -33,7 +33,7 @@ const renderRefWithLinks = (text: string) => {
       </a>
     ) : (
       <span key={i}>{part}</span>
-    )
+    ),
   );
 };
 

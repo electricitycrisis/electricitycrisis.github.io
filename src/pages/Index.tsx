@@ -46,23 +46,38 @@ const Index = () => {
         <Suspense fallback={<LoadingFallback />}>
           <HeroStage />
 
-          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
+          <div
+            data-gsap="parallax"
+            className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left"
+          />
 
           <CrisisStage />
 
-          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
+          <div
+            data-gsap="parallax"
+            className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left"
+          />
 
           <InvestigationStage />
 
-          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
+          <div
+            data-gsap="parallax"
+            className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left"
+          />
 
           <LogisticsStage />
 
-          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
+          <div
+            data-gsap="parallax"
+            className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left"
+          />
 
           <PlanStage />
 
-          <div data-gsap="parallax" className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left" />
+          <div
+            data-gsap="parallax"
+            className="h-px w-full max-w-4xl mx-auto bg-gradient-to-r from-transparent via-primary/30 to-transparent origin-left"
+          />
 
           <BibliographyStage />
 
@@ -81,7 +96,8 @@ const Index = () => {
             <div className="mb-2 text-primary/40">// END_TRANSMISSION</div>
             <div>GP — KARACHI'S ELECTRICITY CRISIS — 2026</div>
             <div className="mt-1 text-[10px] text-muted-foreground/50">
-              MUHAMMAD USMAN KHAN • ABDUL NAFAY • ABDULLAH IBNE ALI • MUHAMMAD HASAN HYDARI
+              MUHAMMAD USMAN KHAN • ABDUL NAFAY • ABDULLAH IBNE ALI • MUHAMMAD
+              HASAN HYDARI
             </div>
           </motion.footer>
         </Suspense>

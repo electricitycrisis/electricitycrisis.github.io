@@ -21,7 +21,9 @@ const NotFound = () => {
           // ROUTE_NOT_FOUND
         </p>
         <p className="mb-8 text-xs text-muted-foreground/60">
-          The requested path <code className="text-primary/60">{location.pathname}</code> does not exist.
+          The requested path{" "}
+          <code className="text-primary/60">{location.pathname}</code> does not
+          exist.
         </p>
         <a
           href="/"
