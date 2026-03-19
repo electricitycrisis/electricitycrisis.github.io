@@ -387,7 +387,7 @@ const fastSin = (x: number): number => {
   return SIN_TABLE[Math.floor(idx)];
 };
 
-const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
 const PowerNexus = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -464,7 +464,9 @@ const PowerNexus = () => {
     const cols = Math.floor(width / colWidth);
     for (let i = 0; i < cols; i++) {
       if (Math.random() > (isMobile ? 0.6 : 0.45)) {
-        const len = isMobile ? 3 + Math.floor(Math.random() * 6) : 5 + Math.floor(Math.random() * 14);
+        const len = isMobile
+          ? 3 + Math.floor(Math.random() * 6)
+          : 5 + Math.floor(Math.random() * 14);
         const chars: string[] = [];
         for (let j = 0; j < len; j++)
           chars.push(MATRIX_CHARS[(Math.random() * MATRIX_CHARS.length) | 0]);
@@ -873,6 +875,36 @@ const PowerNexus = () => {
     [],
   );
 
+  const generateBranchBolt = useCallback(
+    (
+      sx: number,
+      sy: number,
+      ex: number,
+      ey: number,
+      depth: number,
+    ): { x: number; y: number }[] => {
+      const points: { x: number; y: number }[] = [{ x: sx, y: sy }];
+      const subdivide = (
+        start: { x: number; y: number },
+        end: { x: number; y: number },
+        d: number,
+      ): { x: number; y: number }[] => {
+        if (d === 0) return [end];
+        const midX = (start.x + end.x) / 2;
+        const midY = (start.y + end.y) / 2;
+        const dist = Math.sqrt((end.x - start.x) ** 2 + (end.y - start.y) ** 2);
+        const offset = (Math.random() - 0.5) * dist * 0.4;
+        const perpX = -(end.y - start.y) / (dist || 1);
+        const perpY = (end.x - start.x) / (dist || 1);
+        const mid = { x: midX + perpX * offset, y: midY + perpY * offset };
+        return [...subdivide(start, mid, d - 1), ...subdivide(mid, end, d - 1)];
+      };
+      points.push(...subdivide({ x: sx, y: sy }, { x: ex, y: ey }, depth));
+      return points;
+    },
+    [],
+  );
+
   const drawInnerBoltLightning = useCallback(
     (ctx: CanvasRenderingContext2D, time: number, surge: number) => {
       const s = stateRef.current;
@@ -965,36 +997,6 @@ const PowerNexus = () => {
       ctx.globalAlpha = 1;
     },
     [generateInnerBolt],
-  );
-
-  const generateBranchBolt = useCallback(
-    (
-      sx: number,
-      sy: number,
-      ex: number,
-      ey: number,
-      depth: number,
-    ): { x: number; y: number }[] => {
-      const points: { x: number; y: number }[] = [{ x: sx, y: sy }];
-      const subdivide = (
-        start: { x: number; y: number },
-        end: { x: number; y: number },
-        d: number,
-      ): { x: number; y: number }[] => {
-        if (d === 0) return [end];
-        const midX = (start.x + end.x) / 2;
-        const midY = (start.y + end.y) / 2;
-        const dist = Math.sqrt((end.x - start.x) ** 2 + (end.y - start.y) ** 2);
-        const offset = (Math.random() - 0.5) * dist * 0.4;
-        const perpX = -(end.y - start.y) / (dist || 1);
-        const perpY = (end.x - start.x) / (dist || 1);
-        const mid = { x: midX + perpX * offset, y: midY + perpY * offset };
-        return [...subdivide(start, mid, d - 1), ...subdivide(mid, end, d - 1)];
-      };
-      points.push(...subdivide({ x: sx, y: sy }, { x: ex, y: ey }, depth));
-      return points;
-    },
-    [],
   );
 
   const drawOrbitingLightning = useCallback(
