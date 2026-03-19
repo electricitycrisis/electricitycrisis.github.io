@@ -86,7 +86,7 @@ const Index = () => {
             className="snap-section text-center py-16 font-mono-code text-xs text-muted-foreground"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             <img
               src="/logo-no-bg.png"

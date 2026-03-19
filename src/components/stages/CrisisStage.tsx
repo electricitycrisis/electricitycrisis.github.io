@@ -114,14 +114,7 @@ const paragraphs = [
 ];
 
 const StatCard = memo(({ s, i }: { s: (typeof stats)[0]; i: number }) => (
-  <motion.div
-    className="glass-panel clip-industrial p-6 relative group"
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay: i * 0.1, type: "spring", stiffness: 80 }}
-    whileHover={{ scale: 1.03 }}
-  >
+  <div className="glass-panel clip-industrial p-6 relative group">
     <div className="scanlines absolute inset-0 pointer-events-none opacity-30" />
 
     <div className="flex items-center gap-2 mb-3">
@@ -144,7 +137,7 @@ const StatCard = memo(({ s, i }: { s: (typeof stats)[0]; i: number }) => (
     <span className="font-mono-code text-[9px] text-primary/30">
       SRC: {s.source}
     </span>
-  </motion.div>
+  </div>
 ));
 
 const PestelCard = memo(
@@ -152,14 +145,9 @@ const PestelCard = memo(
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-      <motion.div
+      <div
         className={`glass-panel clip-industrial p-5 cursor-pointer transition-all duration-300 ${isExpanded ? "glow-blue" : ""}`}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: i * 0.08 }}
         onClick={() => setIsExpanded(!isExpanded)}
-        whileHover={{ scale: 1.02 }}
       >
         <div className="flex items-center gap-2 mb-2">
           <span className="font-mono-code text-lg text-primary font-bold">
@@ -177,26 +165,22 @@ const PestelCard = memo(
         <span className="font-mono-code text-[9px] text-primary/30 mt-2 block">
           {isExpanded ? "▲ COLLAPSE" : "▼ EXPAND"}
         </span>
-      </motion.div>
+      </div>
     );
   },
 );
 
 const CrisisStage = () => {
   return (
-    <motion.section
+    <section
       id="crisis"
       className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
     >
       <motion.p
         className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         // CRISIS_OVERVIEW
       </motion.p>
@@ -205,7 +189,7 @@ const CrisisStage = () => {
         className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-6 tracking-wider text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.1 }}
       >
         THE SCALE OF THE CRISIS
@@ -215,7 +199,7 @@ const CrisisStage = () => {
         className="glass-panel clip-industrial p-6 sm:p-8 max-w-3xl w-full mb-6"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.2 }}
       >
         {paragraphs.map((p, i) => (
@@ -228,7 +212,7 @@ const CrisisStage = () => {
         ))}
       </motion.div>
 
-      {/* Stats Grid */}
+      {/* Stats Grid — GSAP handles stagger animation */}
       <div
         data-gsap="stagger"
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl w-full mt-10"
@@ -243,7 +227,7 @@ const CrisisStage = () => {
         className="mt-16 max-w-4xl w-full"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.3 }}
       >
         <h3 className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-4 text-center">
@@ -262,10 +246,10 @@ const CrisisStage = () => {
                 <th className="text-left p-3 font-mono-code text-primary/70">
                   Supply
                 </th>
-                <th className="text-left p-3 font-mono-code text-primary/70">
+                <th className="text-left p-3 font-mono-code text-primary/70 hidden sm:table-cell">
                   Load-Shedding
                 </th>
-                <th className="text-left p-3 font-mono-code text-primary/70">
+                <th className="text-left p-3 font-mono-code text-primary/70 hidden sm:table-cell">
                   Source
                 </th>
               </tr>
@@ -276,8 +260,8 @@ const CrisisStage = () => {
                   <td className="p-3 text-foreground">{row.area}</td>
                   <td className="p-3 text-muted-foreground">{row.demand}</td>
                   <td className="p-3 text-muted-foreground">{row.supply}</td>
-                  <td className="p-3 text-muted-foreground">{row.shedding}</td>
-                  <td className="p-3 font-mono-code text-primary/40 text-[10px]">
+                  <td className="p-3 text-muted-foreground hidden sm:table-cell">{row.shedding}</td>
+                  <td className="p-3 font-mono-code text-primary/40 text-[10px] hidden sm:table-cell">
                     {row.source}
                   </td>
                 </tr>
@@ -287,12 +271,12 @@ const CrisisStage = () => {
         </div>
       </motion.div>
 
-      {/* PESTEL Analysis */}
+      {/* PESTEL Analysis — GSAP handles stagger */}
       <motion.div
         className="mt-16 max-w-4xl w-full"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.4 }}
       >
         <h3 className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-6 text-center">
@@ -307,7 +291,7 @@ const CrisisStage = () => {
           ))}
         </div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 };
 

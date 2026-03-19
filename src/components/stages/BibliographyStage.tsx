@@ -39,19 +39,15 @@ const renderRefWithLinks = (text: string) => {
 
 const BibliographyStage = () => {
   return (
-    <motion.section
+    <section
       id="bibliography"
       className="snap-section min-h-screen flex flex-col items-center px-4 py-20"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
     >
       <motion.p
         className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         // REFERENCES
       </motion.p>
@@ -60,7 +56,7 @@ const BibliographyStage = () => {
         className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-10 tracking-wider text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.1 }}
       >
         BIBLIOGRAPHY
@@ -68,22 +64,18 @@ const BibliographyStage = () => {
 
       <div data-gsap="stagger" className="max-w-3xl w-full space-y-3">
         {references.map((ref, i) => (
-          <motion.div
+          <div
             key={i}
             className="glass-panel p-4 text-xs sm:text-sm text-muted-foreground leading-relaxed font-mono-code flex gap-3"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
           >
             <span className="text-primary/30 shrink-0 tabular-nums">
               [{String(i + 1).padStart(2, "0")}]
             </span>
             <span>{renderRefWithLinks(ref)}</span>
-          </motion.div>
+          </div>
         ))}
       </div>
-    </motion.section>
+    </section>
   );
 };
 

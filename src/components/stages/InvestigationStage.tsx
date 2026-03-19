@@ -39,23 +39,12 @@ const InvestigationCard = memo(
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-      <motion.div
+      <div
         className={`glass-panel clip-industrial p-6 relative cursor-pointer transition-all duration-500 ${
           isHovered ? "glow-blue" : ""
         }`}
-        initial={{ opacity: 0, rotateY: 15, x: i % 2 === 0 ? -60 : 60 }}
-        whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 0.6,
-          delay: i * 0.15,
-          type: "spring",
-          stiffness: 80,
-        }}
-        whileHover={{ scale: 1.03, rotateY: 5 }}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
-        style={{ transformStyle: "preserve-3d" }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div className="scanlines absolute inset-0 pointer-events-none" />
 
@@ -81,26 +70,22 @@ const InvestigationCard = memo(
         </p>
 
         <div className="mt-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-      </motion.div>
+      </div>
     );
   },
 );
 
 const InvestigationStage = () => {
   return (
-    <motion.section
+    <section
       id="investigation"
       className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20 relative"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
     >
       <motion.p
         className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         // STAGE_01: INVESTIGATION
       </motion.p>
@@ -109,7 +94,7 @@ const InvestigationStage = () => {
         className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.1 }}
       >
         THE INVESTIGATION
@@ -119,7 +104,7 @@ const InvestigationStage = () => {
         className="text-sm text-muted-foreground max-w-2xl text-center mb-12 leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.2 }}
       >
         Each team member investigated a critical dimension of Karachi's
@@ -130,13 +115,12 @@ const InvestigationStage = () => {
       <div
         data-gsap="stagger"
         className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full"
-        style={{ perspective: "1000px" }}
       >
         {members.map((m, i) => (
           <InvestigationCard key={m.name} m={m} i={i} />
         ))}
       </div>
-    </motion.section>
+    </section>
   );
 };
 

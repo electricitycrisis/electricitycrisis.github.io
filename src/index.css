@@ -56,6 +56,13 @@
     @apply bg-background text-foreground;
     font-family: "Space Grotesk", system-ui, sans-serif;
     overflow-x: hidden;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(200 80% 73% / 0.3) hsl(216 50% 3%);
   }
 
   ::-webkit-scrollbar {
@@ -66,6 +73,7 @@
   }
   ::-webkit-scrollbar-thumb {
     background: hsl(200 80% 73% / 0.3);
+    border-radius: 2px;
   }
 }
 
@@ -78,7 +86,7 @@
     @apply backdrop-blur-2xl border border-border;
     background: linear-gradient(
       135deg,
-      hsl(200 80% 73% / 0.1),
+      hsl(200 80% 73% / 0.15),
       hsl(216 50% 3% / 0.92)
     );
     box-shadow:
@@ -133,7 +141,8 @@
     scroll-snap-type: y proximity;
     overflow-y: auto;
     height: 100vh;
-    scrollbar-gutter: stable;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .scroll-container::-webkit-scrollbar {

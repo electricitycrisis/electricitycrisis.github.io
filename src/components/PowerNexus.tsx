@@ -387,9 +387,12 @@ const fastSin = (x: number): number => {
   return SIN_TABLE[Math.floor(idx)];
 };
 
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
 const PowerNexus = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const frameCountRef = useRef(0);
   const stateRef = useRef({
     time: 0,
     lastTime: 0,
@@ -457,11 +460,11 @@ const PowerNexus = () => {
 
   const initMatrix = useCallback((width: number) => {
     const drops: MatrixDrop[] = [];
-    const colWidth = 20;
+    const colWidth = isMobile ? 30 : 20;
     const cols = Math.floor(width / colWidth);
     for (let i = 0; i < cols; i++) {
-      if (Math.random() > 0.45) {
-        const len = 5 + Math.floor(Math.random() * 14);
+      if (Math.random() > (isMobile ? 0.6 : 0.45)) {
+        const len = isMobile ? 3 + Math.floor(Math.random() * 6) : 5 + Math.floor(Math.random() * 14);
         const chars: string[] = [];
         for (let j = 0; j < len; j++)
           chars.push(MATRIX_CHARS[(Math.random() * MATRIX_CHARS.length) | 0]);
@@ -481,8 +484,9 @@ const PowerNexus = () => {
   const initRings = useCallback(
     (width: number, height: number) => {
       const baseRadius = Math.min(width, height) * 0.12;
+      const ringCount = isMobile ? 3 : 6;
       const rings: Ring[] = [];
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < ringCount; i++) {
         const segCount = 6 + i * 2;
         const gaps: number[] = [];
         for (let j = 0; j < segCount; j++)
@@ -499,8 +503,9 @@ const PowerNexus = () => {
       }
       ringsRef.current = rings;
 
+      const arcCount = isMobile ? 2 : 6;
       const arcs: BackgroundArc[] = [];
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < arcCount; i++) {
         arcs.push({
           startAngle: Math.random() * TWO_PI,
           endAngle: Math.random() * Math.PI * 0.4 + 0.2,
@@ -511,8 +516,10 @@ const PowerNexus = () => {
       }
       arcsRef.current = arcs;
       initMatrix(width);
-      initParticlePool(60); // Reduced from 80
-      for (let i = 0; i < 20; i++) spawnParticle(); // Reduced from 25
+      const particleCount = isMobile ? 20 : 60;
+      const initialSpawn = isMobile ? 8 : 20;
+      initParticlePool(particleCount);
+      for (let i = 0; i < initialSpawn; i++) spawnParticle();
     },
     [initMatrix, initParticlePool, spawnParticle],
   );
@@ -1093,6 +1100,12 @@ const PowerNexus = () => {
     (timestamp: number) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
+      // Frame skip on mobile — render every other frame
+      frameCountRef.current++;
+      if (isMobile && frameCountRef.current % 2 !== 0) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
       const ctx = canvas.getContext("2d", { alpha: false });
       if (!ctx) return;
       const s = stateRef.current;
@@ -1234,7 +1247,7 @@ const PowerNexus = () => {
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
     const w = window.innerWidth;
     const h = window.innerHeight;
     canvas.width = w * dpr;

@@ -42,20 +42,16 @@ const PlanStage = () => {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <motion.section
+    <section
       id="plan"
       ref={containerRef}
       className="snap-section min-h-screen flex flex-col items-center px-4 py-20"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
     >
       <motion.p
         className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         // STAGE_03: PLAN_OF_ACTION
       </motion.p>
@@ -64,7 +60,7 @@ const PlanStage = () => {
         className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.1 }}
       >
         PLAN OF ACTION
@@ -74,7 +70,7 @@ const PlanStage = () => {
         className="text-sm text-muted-foreground max-w-xl text-center mb-16"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.2 }}
       >
         Our plan of action was based on how we as individuals can minimise
@@ -96,7 +92,7 @@ const PlanStage = () => {
               className="relative pl-16 sm:pl-20"
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
+              viewport={{ once: false, amount: 0.5 }}
               transition={{ duration: 0.6, delay: i * 0.15, type: "spring" }}
             >
               <div
@@ -147,7 +143,7 @@ const PlanStage = () => {
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

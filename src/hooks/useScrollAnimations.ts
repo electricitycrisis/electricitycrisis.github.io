@@ -4,94 +4,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
 const useScrollAnimations = () => {
   useEffect(() => {
     const scrollContainer = document.querySelector(".scroll-container");
-    if (!scrollContainer) return;
+    // On mobile, don't use custom scroller — let ScrollTrigger use the native scroll
+    const scroller = isMobile ? undefined : scrollContainer;
+    if (!isMobile && !scrollContainer) return;
 
-    // Fade-up elements
-    const fadeUpEls = document.querySelectorAll('[data-gsap="fade-up"]');
-    fadeUpEls.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            scroller: scrollContainer,
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        },
-      );
-    });
-
-    // Scale-in elements
-    const scaleEls = document.querySelectorAll('[data-gsap="scale-in"]');
-    scaleEls.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { scale: 0.9, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.6,
-          ease: "back.out(1.4)",
-          scrollTrigger: {
-            trigger: el,
-            scroller: scrollContainer,
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        },
-      );
-    });
-
-    // Fade-left elements
-    const fadeLeftEls = document.querySelectorAll('[data-gsap="fade-left"]');
-    fadeLeftEls.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { x: 60, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            scroller: scrollContainer,
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        },
-      );
-    });
-
-    // Fade-right elements
-    const fadeRightEls = document.querySelectorAll('[data-gsap="fade-right"]');
-    fadeRightEls.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { x: -60, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            scroller: scrollContainer,
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        },
-      );
-    });
+    const triggerBase = {
+      scroller,
+      start: isMobile ? "top 95%" : "top 85%",
+      toggleActions: "play reverse play reverse" as const,
+      invalidateOnRefresh: true,
+    };
 
     // Stagger children
     const staggerEls = document.querySelectorAll('[data-gsap="stagger"]');
@@ -107,9 +34,7 @@ const useScrollAnimations = () => {
           ease: "power2.out",
           scrollTrigger: {
             trigger: el,
-            scroller: scrollContainer,
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
+            ...triggerBase,
           },
         },
       );
@@ -126,10 +51,11 @@ const useScrollAnimations = () => {
           ease: "none",
           scrollTrigger: {
             trigger: el,
-            scroller: scrollContainer,
+            scroller,
             start: "top 90%",
             end: "top 50%",
             scrub: true,
+            invalidateOnRefresh: true,
           },
         },
       );

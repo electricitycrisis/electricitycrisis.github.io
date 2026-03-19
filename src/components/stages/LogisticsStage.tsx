@@ -9,19 +9,15 @@ const roles = [
 
 const LogisticsStage = () => {
   return (
-    <motion.section
+    <section
       id="logistics"
       className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
     >
       <motion.p
         className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         // STAGE_02: LOGISTICS
       </motion.p>
@@ -30,7 +26,7 @@ const LogisticsStage = () => {
         className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.1 }}
       >
         METHODOLOGY & ROLES
@@ -40,7 +36,7 @@ const LogisticsStage = () => {
         className="text-sm text-muted-foreground max-w-2xl text-center mb-6 leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.2 }}
       >
         Our research encompassed <span className="text-primary">political</span>
@@ -55,7 +51,7 @@ const LogisticsStage = () => {
         className="text-xs text-muted-foreground/70 max-w-xl text-center mb-12 leading-relaxed font-mono-code"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ delay: 0.3 }}
       >
         Sources include NEPRA reports, World Bank energy data, and first-hand
@@ -67,14 +63,9 @@ const LogisticsStage = () => {
         className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl w-full"
       >
         {roles.map((r, i) => (
-          <motion.div
+          <div
             key={r.name}
-            className="glass-panel clip-industrial p-5 relative group cursor-pointer"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1, type: "spring", stiffness: 100 }}
-            whileHover={{ scale: 1.02 }}
+            className="glass-panel clip-industrial p-5 relative group cursor-pointer transition-transform hover:scale-[1.02]"
           >
             <div className="scanlines absolute inset-0 pointer-events-none opacity-50" />
 
@@ -90,18 +81,14 @@ const LogisticsStage = () => {
             </div>
             <div className="text-foreground text-sm font-medium">{r.role}</div>
 
-            <motion.div
+            <div
               className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary/50"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 + i * 0.1, duration: 0.8 }}
               style={{ transformOrigin: "left" }}
             />
-          </motion.div>
+          </div>
         ))}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
