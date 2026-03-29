@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import PowerNexus from "@/components/PowerNexus";
 import ImageCollection from "@/components/ImageCollection";
@@ -23,37 +22,30 @@ const Assembly = () => {
           ← BACK TO HOME
         </Link>
 
-        <motion.h1
-          className="text-3xl sm:text-4xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground text-glow mb-4 tracking-wider text-center animate-fade-in-up">
           CLASS ASSEMBLY
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          className="font-mono-code text-xs text-primary/50 mb-12 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+        <p
+          className="font-mono-code text-xs text-primary/50 mb-12 text-center animate-fade-in-up"
+          style={{ animationDelay: "0.2s" }}
         >
           // AWARENESS_EVENT
-        </motion.p>
+        </p>
 
         <div className="space-y-6">
           {collections.map((col, i) => (
-            <motion.div
+            <div
               key={col.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.15 }}
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${0.3 + i * 0.15}s` }}
             >
               <ImageCollection
                 title={col.title}
                 subtitle={col.subtitle}
                 images={col.images}
               />
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

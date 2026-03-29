@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 const roles = [
   { name: "MUHAMMAD USMAN KHAN", role: "Videography", icon: "▶" },
   { name: "ABDUL NAFAY", role: "File Organisation", icon: "◆" },
@@ -11,33 +9,20 @@ const LogisticsStage = () => {
   return (
     <section
       id="logistics"
-      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20"
+      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 sm:py-28"
     >
-      <motion.p
-        className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-      >
-        // STAGE_02: LOGISTICS
-      </motion.p>
+      <div data-gsap="stagger">
+        <p className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4 text-center">
+          // STAGE_02: LOGISTICS
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center">
+          METHODOLOGY & ROLES
+        </h2>
+      </div>
 
-      <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.1 }}
-      >
-        METHODOLOGY & ROLES
-      </motion.h2>
-
-      <motion.p
+      <div
+        data-gsap="blur-in"
         className="text-sm text-muted-foreground max-w-2xl text-center mb-6 leading-relaxed"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.2 }}
       >
         Our research encompassed <span className="text-primary">political</span>
         , <span className="text-primary">economical</span>,{" "}
@@ -45,27 +30,22 @@ const LogisticsStage = () => {
         <span className="text-primary">technological</span> lenses — conducting
         primary research surveys, personal testimonies, and interviews alongside
         secondary research for professional perspectives.
-      </motion.p>
+      </div>
 
-      <motion.p
+      <p
+        data-gsap="fade-up"
         className="text-xs text-muted-foreground/70 max-w-xl text-center mb-12 leading-relaxed font-mono-code"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.3 }}
       >
         Sources include NEPRA reports, World Bank energy data, and first-hand
         community interviews in Karachi.
-      </motion.p>
+      </p>
 
-      <div
-        data-gsap="stagger"
-        className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl w-full"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl w-full">
         {roles.map((r, i) => (
           <div
             key={r.name}
-            className="glass-panel clip-industrial p-5 relative group cursor-pointer transition-transform hover:scale-[1.02]"
+            data-gsap="rotate-in"
+            className="glass-panel clip-industrial p-5 relative group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:bg-primary/5"
           >
             <div className="scanlines absolute inset-0 pointer-events-none opacity-50" />
 
@@ -81,10 +61,7 @@ const LogisticsStage = () => {
             </div>
             <div className="text-foreground text-sm font-medium">{r.role}</div>
 
-            <div
-              className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary/50"
-              style={{ transformOrigin: "left" }}
-            />
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary/50 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
           </div>
         ))}
       </div>

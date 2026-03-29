@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useState, memo } from "react";
 
 const members = [
@@ -40,6 +39,7 @@ const InvestigationCard = memo(
 
     return (
       <div
+        data-gsap={i % 2 === 0 ? "slide-left" : "slide-right"}
         className={`glass-panel clip-industrial p-6 relative cursor-pointer transition-all duration-500 ${
           isHovered ? "glow-blue" : ""
         }`}
@@ -79,43 +79,27 @@ const InvestigationStage = () => {
   return (
     <section
       id="investigation"
-      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20 relative"
+      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 sm:py-28 relative"
     >
-      <motion.p
-        className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-      >
-        // STAGE_01: INVESTIGATION
-      </motion.p>
+      <div data-gsap="stagger">
+        <p className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4 text-center">
+          // STAGE_01: INVESTIGATION
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center">
+          THE INVESTIGATION
+        </h2>
+      </div>
 
-      <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-4 tracking-wider text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.1 }}
-      >
-        THE INVESTIGATION
-      </motion.h2>
-
-      <motion.p
+      <p
+        data-gsap="blur-in"
         className="text-sm text-muted-foreground max-w-2xl text-center mb-12 leading-relaxed"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.2 }}
       >
         Each team member investigated a critical dimension of Karachi's
         electricity crisis — from policy failures to community impact — building
         a comprehensive research portfolio.
-      </motion.p>
+      </p>
 
-      <div
-        data-gsap="stagger"
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
         {members.map((m, i) => (
           <InvestigationCard key={m.name} m={m} i={i} />
         ))}

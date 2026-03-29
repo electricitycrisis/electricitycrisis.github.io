@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 const references = [
   "The Friday Times (2026) 'Year In Review: K-Electric Shows Steady Progress During 2025', The Friday Times, 3 January. Available at: https://www.thefridaytimes.com/03-Jan-2026/year-review-k-electric-shows-steady-progress-2025 (Accessed: 15 March 2026).",
   "Business Recorder (2026) 'Karachi's industrial areas badly hit by load-shedding: study', Business Recorder. Available at: https://www.brecorder.com/news/40410150 (Accessed: 15 March 2026).",
@@ -41,37 +39,28 @@ const BibliographyStage = () => {
   return (
     <section
       id="bibliography"
-      className="snap-section min-h-screen flex flex-col items-center px-4 py-20"
+      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 sm:py-28"
     >
-      <motion.p
-        className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-      >
-        // REFERENCES
-      </motion.p>
+      <div data-gsap="stagger">
+        <p className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4 text-center">
+          // REFERENCES
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-10 tracking-wider text-center">
+          BIBLIOGRAPHY
+        </h2>
+      </div>
 
-      <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-10 tracking-wider text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.1 }}
-      >
-        BIBLIOGRAPHY
-      </motion.h2>
-
-      <div data-gsap="stagger" className="max-w-3xl w-full space-y-3">
+      <div className="max-w-3xl w-full space-y-3">
         {references.map((ref, i) => (
           <div
             key={i}
-            className="glass-panel p-4 text-xs sm:text-sm text-muted-foreground leading-relaxed font-mono-code flex gap-3"
+            data-gsap={i % 2 === 0 ? "slide-left" : "slide-right"}
+            className="glass-panel p-4 text-xs sm:text-sm text-muted-foreground leading-relaxed flex gap-3 transition-colors duration-300 hover:bg-primary/5"
           >
-            <span className="text-primary/30 shrink-0 tabular-nums">
+            <span className="font-mono-code text-primary/30 shrink-0 tabular-nums">
               [{String(i + 1).padStart(2, "0")}]
             </span>
-            <span>{renderRefWithLinks(ref)}</span>
+            <span className="leading-[1.7]">{renderRefWithLinks(ref)}</span>
           </div>
         ))}
       </div>

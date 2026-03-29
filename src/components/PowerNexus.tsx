@@ -393,6 +393,7 @@ const PowerNexus = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const frameCountRef = useRef(0);
+  const lastDrawRef = useRef(0);
   const stateRef = useRef({
     time: 0,
     lastTime: 0,
@@ -460,12 +461,12 @@ const PowerNexus = () => {
 
   const initMatrix = useCallback((width: number) => {
     const drops: MatrixDrop[] = [];
-    const colWidth = isMobile ? 30 : 20;
+    const colWidth = isMobile ? 60 : 20;
     const cols = Math.floor(width / colWidth);
     for (let i = 0; i < cols; i++) {
-      if (Math.random() > (isMobile ? 0.6 : 0.45)) {
+      if (Math.random() > (isMobile ? 0.8 : 0.45)) {
         const len = isMobile
-          ? 3 + Math.floor(Math.random() * 6)
+          ? 3 + Math.floor(Math.random() * 3)
           : 5 + Math.floor(Math.random() * 14);
         const chars: string[] = [];
         for (let j = 0; j < len; j++)
@@ -486,7 +487,7 @@ const PowerNexus = () => {
   const initRings = useCallback(
     (width: number, height: number) => {
       const baseRadius = Math.min(width, height) * 0.12;
-      const ringCount = isMobile ? 3 : 6;
+      const ringCount = isMobile ? 2 : 6;
       const rings: Ring[] = [];
       for (let i = 0; i < ringCount; i++) {
         const segCount = 6 + i * 2;
@@ -505,7 +506,7 @@ const PowerNexus = () => {
       }
       ringsRef.current = rings;
 
-      const arcCount = isMobile ? 2 : 6;
+      const arcCount = isMobile ? 0 : 6;
       const arcs: BackgroundArc[] = [];
       for (let i = 0; i < arcCount; i++) {
         arcs.push({
@@ -518,8 +519,8 @@ const PowerNexus = () => {
       }
       arcsRef.current = arcs;
       initMatrix(width);
-      const particleCount = isMobile ? 20 : 60;
-      const initialSpawn = isMobile ? 8 : 20;
+      const particleCount = isMobile ? 6 : 60;
+      const initialSpawn = isMobile ? 3 : 20;
       initParticlePool(particleCount);
       for (let i = 0; i < initialSpawn; i++) spawnParticle();
     },
@@ -1098,15 +1099,65 @@ const PowerNexus = () => {
     [generateBranchBolt],
   );
 
+  // Store all draw functions in a ref to avoid dependency chain in animate
+  const drawFnsRef = useRef<{
+    drawMatrix: typeof drawMatrix;
+    drawArcs: typeof drawArcs;
+    drawParticles: typeof drawParticles;
+    drawBolts: typeof drawBolts;
+    drawRings: typeof drawRings;
+    drawLogo: typeof drawLogo;
+    drawInnerBoltLightning: typeof drawInnerBoltLightning;
+    drawOrbitingLightning: typeof drawOrbitingLightning;
+    spawnParticle: typeof spawnParticle;
+    spawnBolt: typeof spawnBolt;
+  }>({
+    drawMatrix,
+    drawArcs,
+    drawParticles,
+    drawBolts,
+    drawRings,
+    drawLogo,
+    drawInnerBoltLightning,
+    drawOrbitingLightning,
+    spawnParticle,
+    spawnBolt,
+  });
+
+  // Keep ref up-to-date without triggering RAF recreation
+  drawFnsRef.current.drawMatrix = drawMatrix;
+  drawFnsRef.current.drawArcs = drawArcs;
+  drawFnsRef.current.drawParticles = drawParticles;
+  drawFnsRef.current.drawBolts = drawBolts;
+  drawFnsRef.current.drawRings = drawRings;
+  drawFnsRef.current.drawLogo = drawLogo;
+  drawFnsRef.current.drawInnerBoltLightning = drawInnerBoltLightning;
+  drawFnsRef.current.drawOrbitingLightning = drawOrbitingLightning;
+  drawFnsRef.current.spawnParticle = spawnParticle;
+  drawFnsRef.current.spawnBolt = spawnBolt;
+
+  const isVisibleRef = useRef(true);
+
   const animate = useCallback(
     (timestamp: number) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
-      // Frame skip on mobile — render every other frame
-      frameCountRef.current++;
-      if (isMobile && frameCountRef.current % 2 !== 0) {
+
+      // Pause RAF when canvas is off-screen
+      if (!isVisibleRef.current) {
         animationRef.current = requestAnimationFrame(animate);
         return;
+      }
+
+      // Mobile: target ~20fps by skipping frames based on elapsed time
+      const now = performance.now();
+      if (isMobile) {
+        if (now - lastDrawRef.current < 50) {
+          // 50ms = 20fps
+          animationRef.current = requestAnimationFrame(animate);
+          return;
+        }
+        lastDrawRef.current = now;
       }
       const ctx = canvas.getContext("2d", { alpha: false });
       if (!ctx) return;
@@ -1117,13 +1168,14 @@ const PowerNexus = () => {
       s.time = timestamp / 1000;
       const params = MODE_PARAMS[modeRef.current];
       const audio = audioLevelRef.current;
+      const fns = drawFnsRef.current;
       s.currentIntensity += (params.intensity - s.currentIntensity) * dt * 3;
       const audioBoost = audio * 1.8;
       if (Math.random() < dt * params.particleRate * (1 + audioBoost))
-        spawnParticle();
+        fns.spawnParticle();
       const boltInt = params.boltInterval / (1 + audioBoost * 0.8);
       if (s.time - s.lastBoltTime > boltInt) {
-        spawnBolt();
+        fns.spawnBolt();
         s.lastBoltTime = s.time;
       }
       const sinceSurge = s.time - s.lastSurge;
@@ -1134,7 +1186,8 @@ const PowerNexus = () => {
         s.surgeActive = true;
         s.surgeProgress = 0;
         s.lastSurge = s.time;
-        for (let i = 0; i < 4; i++) setTimeout(() => spawnBolt(), i * 60);
+        for (let i = 0; i < (isMobile ? 2 : 4); i++)
+          setTimeout(() => fns.spawnBolt(), i * 60);
       }
       if (s.surgeActive) {
         s.surgeProgress += dt * 2.8;
@@ -1185,11 +1238,13 @@ const PowerNexus = () => {
       glow.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, s.width, s.height);
-      drawMatrix(ctx, dt, surge);
-      drawArcs(ctx, s.time * speedMult, surge);
-      drawParticles(ctx, dt, surge, s.time);
-      drawBolts(ctx, dt);
-      drawRings(ctx, s.time * speedMult, surge);
+      fns.drawMatrix(ctx, dt, surge);
+      if (!isMobile) {
+        fns.drawArcs(ctx, s.time * speedMult, surge);
+      }
+      fns.drawParticles(ctx, dt, surge, s.time);
+      fns.drawBolts(ctx, dt);
+      fns.drawRings(ctx, s.time * speedMult, surge);
       if (s.surgeActive) {
         const ripR = s.surgeProgress * Math.min(s.width, s.height) * 0.55;
         const ripA = (1 - s.surgeProgress) * 0.35;
@@ -1199,57 +1254,48 @@ const PowerNexus = () => {
         ctx.arc(s.centerX, s.centerY, ripR, 0, TWO_PI);
         ctx.stroke();
       }
-      drawLogo(ctx, s.time, surge);
-      drawInnerBoltLightning(ctx, s.time, surge);
-      drawOrbitingLightning(ctx, s.time, surge);
-      const corners = [
-        [70, 70],
-        [s.width - 70, 70],
-        [70, s.height - 70],
-        [s.width - 70, s.height - 70],
-      ];
-      for (let i = 0; i < 4; i++) {
-        const pulse = fastSin(s.time * 2 + i * 1.57) * 0.5 + 0.5;
-        const alphaC = 0.15 + pulse * 0.2 + surge * 0.2;
-        const grad = ctx.createRadialGradient(
-          corners[i][0],
-          corners[i][1],
-          0,
-          corners[i][0],
-          corners[i][1],
-          50,
-        );
-        grad.addColorStop(
-          0,
-          `rgba(${theme.r},${theme.g},${theme.b},${alphaC})`,
-        );
-        grad.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(corners[i][0], corners[i][1], 50, 0, TWO_PI);
-        ctx.fill();
+      fns.drawLogo(ctx, s.time, surge);
+      if (!isMobile) {
+        fns.drawInnerBoltLightning(ctx, s.time, surge);
+        fns.drawOrbitingLightning(ctx, s.time, surge);
+        const corners = [
+          [70, 70],
+          [s.width - 70, 70],
+          [70, s.height - 70],
+          [s.width - 70, s.height - 70],
+        ];
+        for (let i = 0; i < 4; i++) {
+          const pulse = fastSin(s.time * 2 + i * 1.57) * 0.5 + 0.5;
+          const alphaC = 0.15 + pulse * 0.2 + surge * 0.2;
+          const grad = ctx.createRadialGradient(
+            corners[i][0],
+            corners[i][1],
+            0,
+            corners[i][0],
+            corners[i][1],
+            50,
+          );
+          grad.addColorStop(
+            0,
+            `rgba(${theme.r},${theme.g},${theme.b},${alphaC})`,
+          );
+          grad.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(corners[i][0], corners[i][1], 50, 0, TWO_PI);
+          ctx.fill();
+        }
       }
       ctx.restore();
       animationRef.current = requestAnimationFrame(animate);
     },
-    [
-      spawnParticle,
-      spawnBolt,
-      drawMatrix,
-      drawArcs,
-      drawParticles,
-      drawBolts,
-      drawRings,
-      drawLogo,
-      drawInnerBoltLightning,
-      drawOrbitingLightning,
-    ],
+    [], // No dependencies — all draw functions read from drawFnsRef
   );
 
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = isMobile ? 0.5 : Math.min(window.devicePixelRatio || 1, 2);
     const w = window.innerWidth;
     const h = window.innerHeight;
     canvas.width = w * dpr;
@@ -1268,7 +1314,6 @@ const PowerNexus = () => {
   }, [initRings]);
 
   useEffect(() => {
-    // Load logo image
     const img = new Image();
     img.src = "/logo-no-bg.png";
     logoImgRef.current = img;
@@ -1276,9 +1321,24 @@ const PowerNexus = () => {
     handleResize();
     window.addEventListener("resize", handleResize);
     animationRef.current = requestAnimationFrame(animate);
+
+    // Visibility gating: pause RAF when canvas is off-screen
+    const canvas = canvasRef.current;
+    let visObserver: IntersectionObserver | null = null;
+    if (canvas) {
+      visObserver = new IntersectionObserver(
+        ([entry]) => {
+          isVisibleRef.current = entry.isIntersecting;
+        },
+        { threshold: 0 },
+      );
+      visObserver.observe(canvas);
+    }
+
     return () => {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationRef.current);
+      visObserver?.disconnect();
     };
   }, [handleResize, animate]);
 
@@ -1286,7 +1346,7 @@ const PowerNexus = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full"
-      style={{ zIndex: 0 }}
+      style={{ zIndex: 0, willChange: isMobile ? "transform" : "auto" }}
     />
   );
 };

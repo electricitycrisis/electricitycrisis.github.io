@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useState, memo } from "react";
 
 const stats = [
@@ -114,7 +113,10 @@ const paragraphs = [
 ];
 
 const StatCard = memo(({ s, i }: { s: (typeof stats)[0]; i: number }) => (
-  <div className="glass-panel clip-industrial p-6 relative group">
+  <div
+    data-gsap="elastic-scale"
+    className="glass-panel clip-industrial p-6 relative group"
+  >
     <div className="scanlines absolute inset-0 pointer-events-none opacity-30" />
 
     <div className="flex items-center gap-2 mb-3">
@@ -124,7 +126,10 @@ const StatCard = memo(({ s, i }: { s: (typeof stats)[0]; i: number }) => (
       </span>
     </div>
 
-    <div className="text-2xl sm:text-3xl font-bold text-primary text-glow mb-1 font-mono-code">
+    <div
+      className="text-2xl sm:text-3xl font-bold text-primary text-glow mb-1 font-mono-code"
+      data-counter={s.value}
+    >
       {s.value}
     </div>
 
@@ -140,79 +145,73 @@ const StatCard = memo(({ s, i }: { s: (typeof stats)[0]; i: number }) => (
   </div>
 ));
 
-const PestelCard = memo(
-  ({ f, i }: { f: (typeof pestelFactors)[0]; i: number }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+const PestelCard = memo(({ f }: { f: (typeof pestelFactors)[0] }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    return (
-      <div
-        className={`glass-panel clip-industrial p-5 cursor-pointer transition-all duration-300 ${isExpanded ? "glow-blue" : ""}`}
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <div className="flex items-center gap-2 mb-2">
-          <span className="font-mono-code text-lg text-primary font-bold">
-            {f.key}
-          </span>
-          <span className="text-sm font-semibold text-foreground">
-            {f.title}
-          </span>
-        </div>
-        <div
-          className={`text-xs text-muted-foreground leading-relaxed overflow-hidden transition-all duration-300 ${isExpanded ? "max-h-96" : "max-h-[3.6em]"}`}
+  return (
+    <div
+      data-gsap="rotate-in"
+      className={`glass-panel clip-industrial p-5 cursor-pointer transition-all duration-300 hover:bg-primary/5 ${isExpanded ? "glow-blue" : ""}`}
+      onClick={() => setIsExpanded(!isExpanded)}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <span className="font-mono-code text-lg text-primary font-bold">
+          {f.key}
+        </span>
+        <span className="text-sm font-semibold text-foreground">{f.title}</span>
+        <span
+          className={`ml-auto font-mono-code text-primary/50 text-xs transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
         >
-          {f.summary}
-        </div>
-        <span className="font-mono-code text-[9px] text-primary/30 mt-2 block">
-          {isExpanded ? "▲ COLLAPSE" : "▼ EXPAND"}
+          ▼
         </span>
       </div>
-    );
-  },
-);
+      <div
+        className="text-xs text-muted-foreground leading-relaxed overflow-hidden"
+        style={{
+          display: "grid",
+          gridTemplateRows: isExpanded ? "1fr" : "0fr",
+          transition: "grid-template-rows 0.3s ease-out",
+        }}
+      >
+        <div className="overflow-hidden">{f.summary}</div>
+      </div>
+    </div>
+  );
+});
 
 const CrisisStage = () => {
   return (
     <section
       id="crisis"
-      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 py-20"
+      className="snap-section min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 sm:py-28"
     >
-      <motion.p
-        className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-      >
-        // CRISIS_OVERVIEW
-      </motion.p>
+      <div data-gsap="stagger">
+        <p className="font-mono-code text-xs tracking-[0.5em] text-primary/50 mb-4">
+          // CRISIS_OVERVIEW
+        </p>
 
-      <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-6 tracking-wider text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.1 }}
-      >
-        THE SCALE OF THE CRISIS
-      </motion.h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-glow mb-6 tracking-wider text-center">
+          THE SCALE OF THE CRISIS
+        </h2>
+      </div>
 
-      <motion.div
+      <div
+        data-gsap="blur-in"
         className="glass-panel clip-industrial p-6 sm:p-8 max-w-3xl w-full mb-6"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.2 }}
       >
-        {paragraphs.map((p, i) => (
-          <p
-            key={i}
-            className="text-sm sm:text-base text-muted-foreground text-center leading-relaxed mb-3 last:mb-0"
-          >
-            {p}
-          </p>
-        ))}
-      </motion.div>
+        <div data-gsap="stagger">
+          {paragraphs.map((p, i) => (
+            <p
+              key={i}
+              className="text-sm sm:text-base text-muted-foreground text-center leading-relaxed mb-3 last:mb-0"
+            >
+              {p}
+            </p>
+          ))}
+        </div>
+      </div>
 
-      {/* Stats Grid — GSAP handles stagger animation */}
+      {/* Stats Grid */}
       <div
         data-gsap="stagger"
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl w-full mt-10"
@@ -223,14 +222,11 @@ const CrisisStage = () => {
       </div>
 
       {/* Supply vs Demand Table */}
-      <motion.div
-        className="mt-16 max-w-4xl w-full"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.3 }}
-      >
-        <h3 className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-4 text-center">
+      <div data-gsap="clip-reveal" className="mt-16 max-w-4xl w-full">
+        <h3
+          data-gsap="fade-up"
+          className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-4 text-center"
+        >
           // SUPPLY_VS_DEMAND
         </h3>
         <div className="glass-panel overflow-hidden">
@@ -260,7 +256,9 @@ const CrisisStage = () => {
                   <td className="p-3 text-foreground">{row.area}</td>
                   <td className="p-3 text-muted-foreground">{row.demand}</td>
                   <td className="p-3 text-muted-foreground">{row.supply}</td>
-                  <td className="p-3 text-muted-foreground hidden sm:table-cell">{row.shedding}</td>
+                  <td className="p-3 text-muted-foreground hidden sm:table-cell">
+                    {row.shedding}
+                  </td>
                   <td className="p-3 font-mono-code text-primary/40 text-[10px] hidden sm:table-cell">
                     {row.source}
                   </td>
@@ -269,28 +267,25 @@ const CrisisStage = () => {
             </tbody>
           </table>
         </div>
-      </motion.div>
+      </div>
 
-      {/* PESTEL Analysis — GSAP handles stagger */}
-      <motion.div
-        className="mt-16 max-w-4xl w-full"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ delay: 0.4 }}
-      >
-        <h3 className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-6 text-center">
+      {/* PESTEL Analysis */}
+      <div data-gsap="fade-up" className="mt-16 max-w-4xl w-full">
+        <h3
+          data-gsap="fade-up"
+          className="font-mono-code text-xs tracking-[0.3em] text-primary/60 mb-6 text-center"
+        >
           // PESTEL_ANALYSIS
         </h3>
         <div
           data-gsap="stagger"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {pestelFactors.map((f, i) => (
-            <PestelCard key={f.key} f={f} i={i} />
+          {pestelFactors.map((f) => (
+            <PestelCard key={f.key} f={f} />
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
